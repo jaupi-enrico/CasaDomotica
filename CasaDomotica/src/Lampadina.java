@@ -7,7 +7,8 @@ public class Lampadina {
     private String nome;
     private boolean acceso;
 
-    public Lampadina(int potenza) {
+    public Lampadina(int id, int potenza) {
+        this.id = id;
         if (potenza < 0)
             potenza = -potenza;
         this.potenza = potenza;
@@ -64,5 +65,12 @@ public class Lampadina {
         this.intensità = 0;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public boolean getStato() {
+        return acceso;
+    }
 }
 
