@@ -24,16 +24,24 @@ public class Lampadina {
         this.acceso = l.acceso;
         this.nome = l.nome;
     }
+
+    public long getId() {
+        return id;
+    }
+    public Posizione getPosizione(){ return this.posizione; }
     public int getPotenza(){
         return this.potenza;
     }
-    public String getNome(){
-        return this.nome;
+    public int getIntensità() {
+        return intensità;
     }
     public String getColore(){
         return this.colore;
     }
-    public Posizione getPosizione(){ return this.posizione; }
+    public String getNome(){
+        return this.nome;
+    }
+    public boolean getStato(){ return acceso; }
 
     public void setColore(String colore){
         this.colore = colore;
@@ -42,6 +50,7 @@ public class Lampadina {
         this.nome = nome;
     }
     public void setPosizione(Posizione posizione){ this.posizione = posizione; }
+    public void setId(long id){ this.id = id; }
 
     public void aumentaIlluminazione(){
         if (this.intensità != 100){
@@ -65,12 +74,22 @@ public class Lampadina {
         this.intensità = 0;
     }
 
-    public long getId() {
-        return id;
+    @Override
+    public String toString(){
+        String stato;
+        if(acceso) stato = "Acceso";
+        else stato = "Spento";
+        return "ID: " + id +
+                "\n Nome: " + nome +
+                "\n Posizione: " + posizione.toString() +
+                "\n Potenza (W): " + potenza +
+                "\n Intensità (%): " + intensità +
+                "\n Colore: " + colore +
+                "\n Stato: " + stato;
     }
 
-    public boolean getStato() {
-        return acceso;
+    public Lampadina toLampadina(String info){
+
     }
 }
 
