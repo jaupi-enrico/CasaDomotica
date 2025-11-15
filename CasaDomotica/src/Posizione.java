@@ -20,4 +20,14 @@ public class Posizione {
     public String getStanza() {
         return stanza;
     }
+
+    @Override
+    public String toString(){
+        return "x=" + x + " y=" + y + " stanza=" + stanza;
+    }
+
+    public Posizione toPosizione(String info){
+        Posizione p = new Posizione(0, 0, "");
+        String[] tokens = info.
+    }
 }
