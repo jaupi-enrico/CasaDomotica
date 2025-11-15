@@ -7,7 +7,7 @@ public class Lampadina {
     private String nome;
     private boolean acceso;
 
-    public Lampadina(int id, int potenza) {
+    public Lampadina(long id, int potenza) {
         this.id = id;
         if (potenza < 0)
             potenza = -potenza;
@@ -89,7 +89,7 @@ public class Lampadina {
     }
 
     public Lampadina toLampadina(String info){
-
+        return new Lampadina(3, 23);
     }
 }
 

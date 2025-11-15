@@ -2,8 +2,8 @@ public class CasaIntelligente {
 
     private GestoreLampadine gestore;
 
-    public CasaIntelligente(GestoreLampadine gestore) {
-        this.gestore = gestore;
+    public CasaIntelligente() {
+        this.gestore = new GestoreLampadine();
     }
 
     public void accendiStanza(String stanza) {
@@ -37,5 +37,26 @@ public class CasaIntelligente {
 
     public GestoreLampadine getGestore() {
         return gestore;
+    }
+
+    public void accediLampadina(long id) throws LampadinaNonTrovataException {
+        gestore.accendi(id);
+    }
+
+    public void spegnilampadina(long id) throws LampadinaNonTrovataException {
+        gestore.accendi(id);
+    }
+
+    public void accendiTutte() {
+        gestore.accendiTutte();
+    }
+
+    public void spegniTutte() {
+        gestore.spegniTutte();
+    }
+
+    public void addLampadina(int potenza) throws LampadinaDuplicataException {
+        Lampadina l = new Lampadina(gestore.newId(), potenza);
+        gestore.aggiungiLampadina(l);
     }
 }
