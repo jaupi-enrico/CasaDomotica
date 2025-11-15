@@ -9,15 +9,16 @@ public class Lampadina {
     private String nome;
     private boolean acceso;
 
-    public Lampadina(int id, int potenza) {
+    public Lampadina(long id, int potenza, Posizione p, String nome, int intensita, String colore) {
         this.id = id;
         if (potenza < 0)
             potenza = -potenza;
         this.potenza = potenza;
-        this.nome = "";
-        this.intensità = 50;
-        this.colore = "bianco";
+        this.nome = nome;
+        this.intensità = intensita;
+        this.colore = colore;
         this.acceso = true;
+        this.posizione = p;
     }
     public Lampadina(Lampadina l){
         this.potenza = l.potenza;
@@ -25,7 +26,9 @@ public class Lampadina {
         this.colore = l.colore;
         this.acceso = l.acceso;
         this.nome = l.nome;
+        this.posizione = l.posizione;
     }
+
 
     public long getId() {
         return id;

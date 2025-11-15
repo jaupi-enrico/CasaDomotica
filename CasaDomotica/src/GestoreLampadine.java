@@ -14,7 +14,7 @@ public class GestoreLampadine {
         arrayLampadine.add(l);
     }
 
-    public void eliminaLampadina(int id) throws LampadinaNonTrovataException {
+    public void eliminaLampadina(long id) throws LampadinaNonTrovataException {
         Lampadina l = getLampadinaById(id);
         if (l == null) {
             throw new LampadinaNonTrovataException(id);
@@ -22,7 +22,7 @@ public class GestoreLampadine {
         arrayLampadine.remove(l);
     }
 
-    public void accendi(int id) throws LampadinaNonTrovataException {
+    public void accendi(long id) throws LampadinaNonTrovataException {
         Lampadina l = getLampadinaById(id);
         if (l == null) {
             throw new LampadinaNonTrovataException(id);
@@ -30,7 +30,7 @@ public class GestoreLampadine {
         l.accendi();
     }
 
-    public void spegni(int id) throws LampadinaNonTrovataException {
+    public void spegni(long id) throws LampadinaNonTrovataException {
         Lampadina l = getLampadinaById(id);
         if (l == null) {
             throw new LampadinaNonTrovataException(id);
@@ -69,5 +69,9 @@ public class GestoreLampadine {
 
     public ArrayList<Lampadina> getTutte() {
         return arrayLampadine;
+    }
+
+    public long newId() {
+        return arrayLampadine.getLast().getId();
     }
 }
