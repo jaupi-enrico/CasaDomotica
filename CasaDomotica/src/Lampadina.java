@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Lampadina {
     private long id;
     private Posizione posizione;
@@ -82,17 +84,33 @@ public class Lampadina {
         String stato;
         if(acceso) stato = "Acceso";
         else stato = "Spento";
-        return "ID: " + id +
-                "\n Nome: " + nome +
-                "\n Posizione: " + posizione.toString() +
-                "\n Potenza (W): " + potenza +
-                "\n Intensità (%): " + intensità +
-                "\n Colore: " + colore +
-                "\n Stato: " + stato;
+        return "ID:" + id +
+                ",Nome:" + nome +
+                ",Posizione:" + posizione.toString() +
+                ",Potenza:" + potenza +
+                ",Intensità:" + intensità +
+                ",Colore:" + colore +
+                ",Stato:" + stato;
     }
 
     public Lampadina toLampadina(String info){
-        return new Lampadina(3, 23);
+        Lampadina l = new Lampadina(0);
+        String[] tokens_values = info.split(",");
+        ArrayList <String> chiavi = new ArrayList<>();
+        ArrayList <String> valori = new ArrayList<>();
+        for (int i = 0; i < tokens_values.length; i++) {
+            String[] chiave_valore_temp = tokens_values[i].split(":");
+            chiavi.add(chiave_valore_temp[0]);
+            valori.add(chiave_valore_temp[1]);
+        }
+        l.id = Long.parseLong(valori.get(0));
+        l.nome = valori.get(1);
+        l.posizione = Posizione;
+        l.potenza = Integer.parseInt(valori.get(3));
+        l.intensità = Integer.parseInt(valori.get(4));
+        l.colore = valori.get(5);
+        if(valori.get(6) == "Acceso") l.acceso = true;
+        else l.acceso = false;
     }
 }
 
