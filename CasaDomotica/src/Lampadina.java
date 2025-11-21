@@ -94,7 +94,7 @@ public class Lampadina {
     }
 
     public Lampadina toLampadina(String info){
-        Lampadina l = new Lampadina(0);
+        Lampadina l = new Lampadina(0, 0, null, "", 0, "");
         String[] tokens_values = info.split(",");
         ArrayList <String> chiavi = new ArrayList<>();
         ArrayList <String> valori = new ArrayList<>();
@@ -105,11 +105,11 @@ public class Lampadina {
         }
         l.id = Long.parseLong(valori.get(0));
         l.nome = valori.get(1);
-        l.posizione = Posizione;
+        l.posizione = valori.get(2).toPosizione();
         l.potenza = Integer.parseInt(valori.get(3));
         l.intensità = Integer.parseInt(valori.get(4));
         l.colore = valori.get(5);
-        if(valori.get(6) == "Acceso") l.acceso = true;
+        if(valori.get(6).equals("Acceso") ) l.acceso = true;
         else l.acceso = false;
     }
 }
