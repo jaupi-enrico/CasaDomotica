@@ -50,7 +50,7 @@ public class GestoreLampadine {
         }
     }
 
-    public Lampadina getLampadinaById(long id) {
+    private Lampadina getLampadinaById(long id) {
         for (Lampadina l : arrayLampadine) {
             if (l.getId() == id) {
                 return l;
@@ -72,6 +72,9 @@ public class GestoreLampadine {
     }
 
     public long newId() {
-        return arrayLampadine.getLast().getId();
+        if (arrayLampadine.isEmpty()) {
+            return 1;
+        }
+        return arrayLampadine.getLast().getId() + 1;
     }
 }

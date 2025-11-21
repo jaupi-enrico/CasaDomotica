@@ -105,12 +105,14 @@ public class Lampadina {
         }
         l.id = Long.parseLong(valori.get(0));
         l.nome = valori.get(1);
-        l.posizione = valori.get(2).toPosizione();
+        l.posizione = l.posizione.toPosizione(valori.get(2));
         l.potenza = Integer.parseInt(valori.get(3));
         l.intensità = Integer.parseInt(valori.get(4));
         l.colore = valori.get(5);
         if(valori.get(6).equals("Acceso") ) l.acceso = true;
         else l.acceso = false;
+        
+        return l;
     }
 }
 
