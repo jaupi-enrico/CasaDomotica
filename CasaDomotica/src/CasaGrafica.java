@@ -17,7 +17,7 @@ public class CasaGrafica {
         casaImg = new Picture(src);
         casaImg.draw();
         lampadineMenu = new ArrayList<>();
-        creaMenu();
+        menu = null;
     }
 
     public CasaIntelligente getGestore() {
@@ -56,7 +56,9 @@ public class CasaGrafica {
         double height = casaImg.getHeight();
         menu = new Rectangle(x, y, width, height);
 
-        for (int i = 0; i < 4; i++) {
+        System.out.println("Lampadine:" + casa.getGestore().getTutte().size());
+
+        for (int i = 0; i < casa.getGestore().getTutte().size(); i++) {
             if (!(lampadineMenu.isEmpty())) {
                 lampadineMenu.add(new Rectangle(x, lampadineMenu.getLast().getY() + lampadineMenu.getLast().getHeight(), width, 50));
             }
@@ -67,6 +69,9 @@ public class CasaGrafica {
     }
 
     public void apriMenu() {
+        if (menu == null) {
+            creaMenu();
+        }
         menu.draw();
         for (int i = 0; i < lampadineMenu.size(); i++) {
             lampadineMenu.get(i).draw();

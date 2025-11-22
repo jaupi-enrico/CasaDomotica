@@ -25,8 +25,6 @@ public class Main {
             System.out.print("Scelta: ");
 
             int scelta = in.nextInt();
-            in.nextLine();
-
             switch (scelta) {
 
                 case 1 -> {
@@ -34,15 +32,23 @@ public class Main {
                         System.out.print("ID lampadina: ");
                         int id = in.nextInt();
 
+                        System.out.print("Nome lampadina: ");
+                        String nome = in.next();
+
+                        System.out.print("Stanza: ");
+                        String stanza = in.next();
+
+                        System.out.print("Colore (yellow, blue, green, red): ");
+                        String colore = in.next().toUpperCase();
+
                         System.out.print("Posizione X: ");
                         int x = in.nextInt();
 
                         System.out.print("Posizione Y: ");
                         int y = in.nextInt();
-                        in.nextLine(); // buffer
 
-                        Posizione p = new Posizione(x, y, "");
-                        casa.getGestore().addLampadina(id, p, "", 50, "");
+                        Posizione p = new Posizione(x, y, stanza);
+                        casa.getGestore().addLampadina(id, p, nome, 50, colore);
 
                         System.out.println("Lampadina aggiunta con successo.");
                     } catch (LampadinaDuplicataException e) {
@@ -68,9 +74,12 @@ public class Main {
                 case 5 -> {
                     running = false;
                     System.out.println("Uscita dal programma...");
+                    System.out.println("Chiudi la finestra per spegnere");
                 }
 
-                default -> System.out.println("Scelta non valida.");
+                default -> {
+                    System.out.println("Scelta non valida.");
+                }
             }
         }
 

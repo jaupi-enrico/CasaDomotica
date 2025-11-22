@@ -1,0 +1,11 @@
+bagno:140:330
+camera1:160:470
+camera2:370:410
+sala1:500:400
+sala2:620:400
+cucina1:620:130
+cucina2:480:100
+ingresso:560:560
+giardino:240:150
+garage1:1160:180
+garage2:1160:400
