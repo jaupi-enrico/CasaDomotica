@@ -23,6 +23,25 @@ public class Lampadina {
         this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore, potenza);
     }
 
+    public Lampadina (String info){
+        String[] tokens_values = info.split(",");
+        ArrayList <String> chiavi = new ArrayList<>();
+        ArrayList <String> valori = new ArrayList<>();
+        for (int i = 0; i < tokens_values.length; i++) {
+            String[] chiave_valore_temp = tokens_values[i].split(":");
+            chiavi.add(chiave_valore_temp[0]);
+            valori.add(chiave_valore_temp[1]);
+        }
+        this.id = Long.parseLong(valori.get(0));
+        this.nome = valori.get(1);
+        this.posizione = this.posizione.toPosizione(valori.get(2));
+        this.potenza = Double.parseDouble(valori.get(3));
+        this.intensita = Integer.parseInt(valori.get(4));
+        this.colore = valori.get(5);
+        if(valori.get(6).equals("Acceso") ) this.acceso = true;
+        else this.acceso = false;
+    }
+
     public long getId() {
         return id;
     }
@@ -96,28 +115,6 @@ public class Lampadina {
                 ",Intensità:" + intensita +
                 ",Colore:" + colore +
                 ",Stato:" + stato;
-    }
-
-    public Lampadina toLampadina(String info){
-        Lampadina l = new Lampadina(0, 0, null, "", 0, "");
-        String[] tokens_values = info.split(",");
-        ArrayList <String> chiavi = new ArrayList<>();
-        ArrayList <String> valori = new ArrayList<>();
-        for (int i = 0; i < tokens_values.length; i++) {
-            String[] chiave_valore_temp = tokens_values[i].split(":");
-            chiavi.add(chiave_valore_temp[0]);
-            valori.add(chiave_valore_temp[1]);
-        }
-        l.id = Long.parseLong(valori.get(0));
-        l.nome = valori.get(1);
-        l.posizione = l.posizione.toPosizione(valori.get(2));
-        l.potenza = Double.parseDouble(valori.get(3));
-        l.intensita = Integer.parseInt(valori.get(4));
-        l.colore = valori.get(5);
-        if(valori.get(6).equals("Acceso") ) l.acceso = true;
-        else l.acceso = false;
-        
-        return l;
     }
 }
 

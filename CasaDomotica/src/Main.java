@@ -6,6 +6,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    public static void loadLamps(String src, CasaGrafica casa) {
+        try{
+            FileReader fr = new FileReader(src);
+            BufferedReader br = new BufferedReader(fr);
+
+            while((br.readLine()) != null){
+                String line = br.readLine();
+                casa.getGestore().getGestore().getTutte().add(new Lampadina(line));
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File con info lampadine non trovato. " + e);
+        } catch (IOException e) {
+            throw new RuntimeException("Errore nella lettura nel file" + e);
+        }
+    }
+
     public static void main(String[] args) {
         CasaGrafica casa = null;
 
