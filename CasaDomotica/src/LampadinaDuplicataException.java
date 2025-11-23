@@ -1,5 +1,5 @@
 public class LampadinaDuplicataException extends Exception {
-    public LampadinaDuplicataException(long id) {
-        super("Esiste già una lampadina con id " + id);
+    public LampadinaDuplicataException(String luogo) {
+        super("Esiste già una lampadina con luogo " + luogo);
     }
 }

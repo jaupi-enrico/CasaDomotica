@@ -1,7 +1,4 @@
-import graphics.Color;
-import graphics.Ellipse;
-import graphics.Picture;
-import graphics.Rectangle;
+import graphics.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -11,12 +8,14 @@ public class CasaGrafica {
     Picture casaImg;
     Rectangle menu;
     ArrayList<Rectangle> lampadineMenu;
+    ArrayList<DisegnoLampadina> lampadineDisegni;
 
     public CasaGrafica(String src) throws FileNotFoundException {
         casa = new CasaIntelligente();
         casaImg = new Picture(src);
         casaImg.draw();
         lampadineMenu = new ArrayList<>();
+        lampadineDisegni = new ArrayList<>();
         menu = null;
     }
 
@@ -25,16 +24,10 @@ public class CasaGrafica {
     }
 
     public void disegnaLampadine() {
-
-        ArrayList<Lampadina> l = casa.getGestore().getTutte();
-        for (int i = 0; i < l.size(); i++) {
-            Ellipse palle = new Ellipse(l.get(i).getPosizione().getX(), l.get(i).getPosizione().getY(), 50, 50);
-            palle.setColor(Color.YELLOW);
-            palle.fill();
-            palle.draw();
+        ArrayList<Lampadina> arr = casa.getGestore().getTutte();
+        for (Lampadina l : arr) {
+            l.disegna();
         }
-
-
     }
 
     public void togliDisegnoLamopadine() {
@@ -50,21 +43,26 @@ public class CasaGrafica {
     }
 
     public void creaMenu() {
-        double x = casaImg.getWidth();
+        double x = casaImg.getMaxX();
         double y = 0;
-        double width = 300;
         double height = casaImg.getHeight();
-        menu = new Rectangle(x, y, width, height);
 
-        System.out.println("Lampadine:" + casa.getGestore().getTutte().size());
+        menu = new Rectangle(x, y, 0, height);
+        menu.setColor(Color.GRAY);
+        menu.fill();
+        menu.draw();
+
+        lampadineMenu.clear();
+
+        double voceH = 50;
+        double voceY = 0;
 
         for (int i = 0; i < casa.getGestore().getTutte().size(); i++) {
-            if (!(lampadineMenu.isEmpty())) {
-                lampadineMenu.add(new Rectangle(x, lampadineMenu.getLast().getY() + lampadineMenu.getLast().getHeight(), width, 50));
-            }
-            else {
-                lampadineMenu.add(new Rectangle(x, y, width, 50));
-            }
+            Rectangle r = new Rectangle(x, voceY, 300, voceH);
+            r.setColor(Color.BLACK);
+            voceY += voceH;
+            lampadineMenu.add(r);
+            r.draw();
         }
     }
 
@@ -72,26 +70,31 @@ public class CasaGrafica {
         if (menu == null) {
             creaMenu();
         }
-        menu.draw();
-        for (int i = 0; i < lampadineMenu.size(); i++) {
-            lampadineMenu.get(i).draw();
-        }
+
         if (menu.getWidth() == 0) {
-            menu.grow(300, 0);
-        }
-        for (int i = 0; i < lampadineMenu.size(); i++) {
-            if (lampadineMenu.get(i).getWidth() == 0) {
-                lampadineMenu.get(i).grow(300, 0);
-            }
+            menu.grow(150, 0);
+            menu.translate(150, 0);
         }
     }
 
     public void chiudiMenu() {
-        menu.grow(-300, 0);
-        for (int i = 0; i < lampadineMenu.size(); i++) {
-            if (lampadineMenu.get(i).getWidth() == 300) {
-                lampadineMenu.get(i).grow(-300, 0);
-            }
+        if (menu == null) return;
+
+        if (menu.getWidth() == 300) {
+            menu.translate(-150, 0);
+            menu.grow(-150, 0);
+        }
+    }
+
+    public void selectLamp(long id) throws LampadinaNonTrovataException {
+        lampadineMenu.get((int) id - 1).setColor(Color.BLUE);
+        lampadineMenu.get((int) id - 1).fill();
+    }
+
+    public void deselectLamps() {
+        for (Rectangle r : lampadineMenu) {
+            r.setColor(Color.BLACK);
+            r.draw();
         }
     }
 }

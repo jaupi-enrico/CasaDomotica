@@ -55,7 +55,7 @@ public class CasaIntelligente {
         gestore.spegniTutte();
     }
 
-    public void addLampadina(int potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
+    public void addLampadina(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
         Lampadina l = new Lampadina(gestore.newId(), potenza, pos, nome, intensita, colore);
         gestore.aggiungiLampadina(l);
     }

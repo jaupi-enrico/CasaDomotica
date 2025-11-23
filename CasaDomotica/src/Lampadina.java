@@ -3,13 +3,14 @@ import java.util.ArrayList;
 public class Lampadina {
     private long id;
     private Posizione posizione;
-    private int potenza;
+    private double potenza;
     private int intensità;
     private String colore;
     private String nome;
     private boolean acceso;
+    private DisegnoLampadina disegno;
 
-    public Lampadina(long id, int potenza, Posizione p, String nome, int intensita, String colore) {
+    public Lampadina(long id, double potenza, Posizione p, String nome, int intensita, String colore) {
         this.id = id;
         if (potenza < 0)
             potenza = -potenza;
@@ -19,64 +20,69 @@ public class Lampadina {
         this.colore = colore;
         this.acceso = true;
         this.posizione = p;
+        this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore);
     }
-    public Lampadina(Lampadina l){
-        this.potenza = l.potenza;
-        this.intensità = l.intensità;
-        this.colore = l.colore;
-        this.acceso = l.acceso;
-        this.nome = l.nome;
-        this.posizione = l.posizione;
-    }
-
 
     public long getId() {
         return id;
     }
-    public Posizione getPosizione(){ return this.posizione; }
-    public int getPotenza(){
+    public Posizione getPosizione() {
+        return this.posizione;
+    }
+    public double getPotenza() {
         return this.potenza;
     }
     public int getIntensità() {
         return intensità;
     }
-    public String getColore(){
+    public String getColore() {
         return this.colore;
     }
-    public String getNome(){
+    public String getNome() {
         return this.nome;
     }
-    public boolean getStato(){ return acceso; }
+    public boolean getStato() {
+        return acceso;
+    }
 
-    public void setColore(String colore){
+    public void setColore(String colore) {
         this.colore = colore;
     }
-    public void setNome(String nome){
+    public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setPosizione(Posizione posizione){ this.posizione = posizione; }
-    public void setId(long id){ this.id = id; }
+    public void setPosizione(Posizione posizione) {
+        this.posizione = posizione;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public void aumentaIlluminazione(){
+    public void aumentaIlluminazione() {
         if (this.intensità != 100){
             this.intensità += 10;
         }
     }
 
-    public void diminuisciIluminazione(){
+    public void diminuisciIluminazione() {
         if (this.intensità != 0){
             this.intensità -= 10;
         }
     }
 
-    public void accendi(){
+    public void accendi() {
         this.acceso = true;
         this.intensità = 50;
     }
 
-    public void spegni(){
+    public void spegni() {
         this.acceso = false;
         this.intensità = 0;
+    }
+
+    public void disegna() {
+        this.disegno.draw();
+        this.disegno.draw();
     }
 
     @Override
@@ -106,7 +112,7 @@ public class Lampadina {
         l.id = Long.parseLong(valori.get(0));
         l.nome = valori.get(1);
         l.posizione = l.posizione.toPosizione(valori.get(2));
-        l.potenza = Integer.parseInt(valori.get(3));
+        l.potenza = Double.parseDouble(valori.get(3));
         l.intensità = Integer.parseInt(valori.get(4));
         l.colore = valori.get(5);
         if(valori.get(6).equals("Acceso") ) l.acceso = true;

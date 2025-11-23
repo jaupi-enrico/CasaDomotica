@@ -8,8 +8,10 @@ public class GestoreLampadine {
     }
 
     public void aggiungiLampadina(Lampadina l) throws LampadinaDuplicataException {
-        if (getLampadinaById(l.getId()) != null) {
-            throw new LampadinaDuplicataException(l.getId());
+        for (Lampadina lamp : arrayLampadine) {
+            if (lamp.getPosizione().getStanza().equals(l.getPosizione().getStanza())) {
+                throw new LampadinaDuplicataException(l.getPosizione().getStanza());
+            }
         }
         arrayLampadine.add(l);
     }
@@ -59,7 +61,7 @@ public class GestoreLampadine {
         return null;
     }
 
-    public Lampadina getLampadina(int id) throws LampadinaNonTrovataException {
+    public Lampadina getLampadina(long id) throws LampadinaNonTrovataException {
         Lampadina l = getLampadinaById(id);
         if (l == null) {
             throw new LampadinaNonTrovataException(id);
