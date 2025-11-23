@@ -50,16 +50,14 @@ public class CasaGrafica {
         menu.fill();
 
         lampadineMenu.clear();
-
-        double voceH = 50;
         double voceY = 0;
 
         for (Lampadina l : casa.getGestore().getTutte()) {
-            Rectangle r = new Rectangle(x, voceY, 300, voceH);
+            Rectangle r = new Rectangle(x, voceY, 300, 50);
             r.setColor(Color.BLACK);
             OpzioneGrafica opzione = new OpzioneGrafica(r, l.getNome(), Long.toString(l.getId()));
             lampadineMenu.add(opzione);
-            voceY += voceH;
+            voceY += 50;
         }
     }
 
@@ -74,8 +72,7 @@ public class CasaGrafica {
         }
 
         for (OpzioneGrafica option : lampadineMenu) {
-            option.riquadro.draw();
-            option.nome.draw();
+            option.open(300);
         }
     }
 
@@ -86,10 +83,32 @@ public class CasaGrafica {
             menu.translate(-150, 0);
             menu.grow(-150, 0);
         }
+
+        for (OpzioneGrafica option : lampadineMenu) {
+            option.close();
+        }
     }
 
     public void addLamp(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
         casa.addLampadina(potenza, pos, nome, intensita, colore);
+        if (menu != null) {
+            if (!lampadineMenu.isEmpty()) {
+                OpzioneGrafica last = lampadineMenu.getLast();
+                Rectangle r = new Rectangle(last.riquadro.getX(), last.riquadro.getY() + last.riquadro.getHeight(), 300, 50);
+                r.setColor(Color.BLACK);
+                OpzioneGrafica opzione = new OpzioneGrafica(r, nome, Long.toString(casa.getGestore().getTutte().getLast().getId()));
+                lampadineMenu.add(opzione);
+            }
+            else {
+                Rectangle r = new Rectangle(casaImg.getMaxX(), 0, 300, 50);
+                r.setColor(Color.BLACK);
+                OpzioneGrafica opzione = new OpzioneGrafica(r, nome, Long.toString(casa.getGestore().getTutte().getLast().getId()));
+                lampadineMenu.add(opzione);
+            }
+            if (menu.getWidth() == 300) {
+                apriMenu();
+            }
+        }
     }
 
     public OpzioneGrafica getOpzione(long id) throws LampadinaNonTrovataException {

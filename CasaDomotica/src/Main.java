@@ -23,6 +23,27 @@ public class Main {
         }
     }
 
+    public static ArrayList<Posizione> loadPos() throws IOException {
+        ArrayList<Posizione> pos = new ArrayList<>();
+        FileReader fr = null;
+        try {
+            fr = new FileReader("pos.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("Errore in lettura delle posizioni");
+            throw new IOException();
+        }
+
+        BufferedReader br = new BufferedReader(fr);
+        Posizione posizione = null;
+        String riga;
+        while ((riga = br.readLine()) != null) {
+            String[] s = riga.split(":");;
+            posizione = new Posizione(Integer. parseInt(s[1]), Integer. parseInt(s[2]), s[0]);
+            pos.add(posizione);
+        }
+        return pos;
+    }
+
     public static void main(String[] args) {
         CasaGrafica casa = null;
 
@@ -188,26 +209,5 @@ public class Main {
         }
 
         in.close();
-    }
-
-    public static ArrayList<Posizione> loadPos() throws IOException {
-        ArrayList<Posizione> pos = new ArrayList<>();
-        FileReader fr = null;
-        try {
-            fr = new FileReader("pos.txt");
-        } catch (FileNotFoundException e) {
-            System.out.println("Errore in lettura delle posizioni");
-            throw new IOException();
-        }
-
-        BufferedReader br = new BufferedReader(fr);
-        Posizione posizione = null;
-        String riga;
-        while ((riga = br.readLine()) != null) {
-            String[] s = riga.split(":");;
-            posizione = new Posizione(Integer. parseInt(s[1]), Integer. parseInt(s[2]), s[0]);
-            pos.add(posizione);
-        }
-        return pos;
     }
 }
