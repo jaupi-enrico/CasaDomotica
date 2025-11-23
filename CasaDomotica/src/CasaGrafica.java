@@ -7,15 +7,13 @@ public class CasaGrafica {
     CasaIntelligente casa;
     Picture casaImg;
     Rectangle menu;
-    ArrayList<Rectangle> lampadineMenu;
-    ArrayList<DisegnoLampadina> lampadineDisegni;
+    ArrayList<OpzioneGrafica> lampadineMenu;
 
     public CasaGrafica(String src) throws FileNotFoundException {
         casa = new CasaIntelligente();
         casaImg = new Picture(src);
         casaImg.draw();
         lampadineMenu = new ArrayList<>();
-        lampadineDisegni = new ArrayList<>();
         menu = null;
     }
 
@@ -57,11 +55,12 @@ public class CasaGrafica {
         double voceH = 50;
         double voceY = 0;
 
-        for (int i = 0; i < casa.getGestore().getTutte().size(); i++) {
+        for (Lampadina l : casa.getGestore().getTutte()) {
             Rectangle r = new Rectangle(x, voceY, 300, voceH);
             r.setColor(Color.BLACK);
+            OpzioneGrafica opzione = new OpzioneGrafica(r, l.getNome(), Long.toString(l.getId()));
+            lampadineMenu.add(opzione);
             voceY += voceH;
-            lampadineMenu.add(r);
             r.draw();
         }
     }
@@ -86,15 +85,29 @@ public class CasaGrafica {
         }
     }
 
+    public void addLamp() {
+        casa.getGestore().aggiungiLampadina();
+
+    }
+
+    public OpzioneGrafica getOpzione(long id) throws LampadinaNonTrovataException {
+        for(OpzioneGrafica option : lampadineMenu) {
+            if(option.id.equals(Long.toString(id))) {
+                return option;
+            }
+        }
+        throw new LampadinaNonTrovataException(id);
+    }
+
     public void selectLamp(long id) throws LampadinaNonTrovataException {
-        lampadineMenu.get((int) id - 1).setColor(Color.BLUE);
-        lampadineMenu.get((int) id - 1).fill();
+        getOpzione(id).riquadro.setColor(Color.BLUE);
+        getOpzione(id).riquadro.fill();
     }
 
     public void deselectLamps() {
-        for (Rectangle r : lampadineMenu) {
-            r.setColor(Color.BLACK);
-            r.draw();
+        for (OpzioneGrafica opzione : lampadineMenu) {
+            opzione.riquadro.setColor(Color.BLACK);
+            opzione.riquadro.draw();
         }
     }
 }

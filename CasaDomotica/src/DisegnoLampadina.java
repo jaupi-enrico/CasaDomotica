@@ -5,10 +5,12 @@ public class DisegnoLampadina {
     private Picture disegno;
     private double x, y;
     private double width = 40, height = 40;
+    private double potenza;
 
-    public DisegnoLampadina(double x, double y, String color) {
+    public DisegnoLampadina(double x, double y, String color, double potenza) {
         this.x = x;
         this.y = y;
+        this.potenza = potenza;
 
         disegno = new Picture("lampadinaImg.png");
         double originalX = disegno.getWidth();
@@ -17,17 +19,21 @@ public class DisegnoLampadina {
         disegno.grow((width - disegno.getWidth()) / 2.0, (height - disegno.getHeight()) / 2.0);
         disegno.translate(x + width/2 - originalX / 2, y + height/2 -originalY / 2);
 
-        palla = new Ellipse(x, y, width, height);
+        palla = new Ellipse(x, y, potenza, potenza);
         if(!setColor(color)) {
             System.out.println("\nColore non trovato");
         }
+        palla.translate(width / 2  - potenza / 2, height / 2- potenza / 2);
     }
 
     public void undraw() {
 
     }
 
-    public void draw() {
+    public void draw(double intensita) {
+        palla.grow(potenza/2 * intensita/100 - palla.getWidth()/2.0, potenza/2 * intensita/100 - palla.getHeight()/2.0);
+
+
         palla.fill();
         disegno.draw();
     }
@@ -49,14 +55,11 @@ public class DisegnoLampadina {
         return true;
     }
 
-    public void accendi(String color, int intensita) {
-        setColor(color);
-        palla.grow(intensita * 0.1, intensita * 0.1);
-        draw();
+    public void accendi(int intensita) {
+        draw(intensita);
     }
 
     public void spegni() {
-        setColor("gray");
-        draw();
+        draw(0);
     }
 }

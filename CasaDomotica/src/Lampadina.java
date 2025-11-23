@@ -4,7 +4,7 @@ public class Lampadina {
     private long id;
     private Posizione posizione;
     private double potenza;
-    private int intensità;
+    private int intensita;
     private String colore;
     private String nome;
     private boolean acceso;
@@ -16,11 +16,11 @@ public class Lampadina {
             potenza = -potenza;
         this.potenza = potenza;
         this.nome = nome;
-        this.intensità = intensita;
+        this.intensita = intensita;
         this.colore = colore;
         this.acceso = true;
         this.posizione = p;
-        this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore);
+        this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore, potenza);
     }
 
     public long getId() {
@@ -32,8 +32,8 @@ public class Lampadina {
     public double getPotenza() {
         return this.potenza;
     }
-    public int getIntensità() {
-        return intensità;
+    public int getIntensita() {
+        return intensita;
     }
     public String getColore() {
         return this.colore;
@@ -59,30 +59,29 @@ public class Lampadina {
     }
 
     public void aumentaIlluminazione() {
-        if (this.intensità != 100){
-            this.intensità += 10;
+        if (this.intensita != 100){
+            this.intensita += 10;
         }
     }
 
     public void diminuisciIluminazione() {
-        if (this.intensità != 0){
-            this.intensità -= 10;
+        if (this.intensita != 0){
+            this.intensita -= 10;
         }
     }
 
     public void accendi() {
         this.acceso = true;
-        this.intensità = 50;
+        disegno.accendi(intensita);
     }
 
     public void spegni() {
         this.acceso = false;
-        this.intensità = 0;
+        disegno.spegni();
     }
 
     public void disegna() {
-        this.disegno.draw();
-        this.disegno.draw();
+        disegno.draw(intensita);
     }
 
     @Override
@@ -94,7 +93,7 @@ public class Lampadina {
                 ",Nome:" + nome +
                 ",Posizione:" + posizione.toString() +
                 ",Potenza:" + potenza +
-                ",Intensità:" + intensità +
+                ",Intensità:" + intensita +
                 ",Colore:" + colore +
                 ",Stato:" + stato;
     }
@@ -113,7 +112,7 @@ public class Lampadina {
         l.nome = valori.get(1);
         l.posizione = l.posizione.toPosizione(valori.get(2));
         l.potenza = Double.parseDouble(valori.get(3));
-        l.intensità = Integer.parseInt(valori.get(4));
+        l.intensita = Integer.parseInt(valori.get(4));
         l.colore = valori.get(5);
         if(valori.get(6).equals("Acceso") ) l.acceso = true;
         else l.acceso = false;
