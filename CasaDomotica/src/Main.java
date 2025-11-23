@@ -65,7 +65,7 @@ public class Main {
                         System.out.print("\nPotenza massima lampadina: ");
                         double potenza = in.nextDouble();
 
-                        casa.getGestore().addLampadina(potenza, posTrovata, nome, 50, colore);
+                        casa.addLamp(potenza, posTrovata, nome, 50, colore);
 
                         System.out.println("Lampadina aggiunta con successo.");
                     } catch (LampadinaDuplicataException e) {

@@ -85,8 +85,8 @@ public class CasaGrafica {
         }
     }
 
-    public void addLamp() {
-        casa.getGestore().aggiungiLampadina();
+    public void addLamp(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
+        casa.addLampadina(potenza, pos, nome, intensita, colore);
 
     }
 
