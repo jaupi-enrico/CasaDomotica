@@ -9,6 +9,8 @@ public class OpzioneGrafica {
 
     OpzioneGrafica(Rectangle riquadro, String nome, String id) {
         this.id = id;
+        this.riquadro = riquadro;
+        this.nome = new Text(riquadro.getX(), riquadro.getY(), nome);
     }
 
 

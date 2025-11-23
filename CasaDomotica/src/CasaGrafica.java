@@ -48,7 +48,6 @@ public class CasaGrafica {
         menu = new Rectangle(x, y, 0, height);
         menu.setColor(Color.GRAY);
         menu.fill();
-        menu.draw();
 
         lampadineMenu.clear();
 
@@ -61,7 +60,6 @@ public class CasaGrafica {
             OpzioneGrafica opzione = new OpzioneGrafica(r, l.getNome(), Long.toString(l.getId()));
             lampadineMenu.add(opzione);
             voceY += voceH;
-            r.draw();
         }
     }
 
@@ -73,6 +71,11 @@ public class CasaGrafica {
         if (menu.getWidth() == 0) {
             menu.grow(150, 0);
             menu.translate(150, 0);
+        }
+
+        for (OpzioneGrafica option : lampadineMenu) {
+            option.riquadro.draw();
+            option.nome.draw();
         }
     }
 
@@ -87,7 +90,6 @@ public class CasaGrafica {
 
     public void addLamp(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
         casa.addLampadina(potenza, pos, nome, intensita, colore);
-
     }
 
     public OpzioneGrafica getOpzione(long id) throws LampadinaNonTrovataException {
