@@ -44,7 +44,15 @@ public class CasaIntelligente {
     }
 
     public void spegnilampadina(long id) throws LampadinaNonTrovataException {
-        gestore.accendi(id);
+        gestore.spegni(id);
+    }
+
+    public void cambiaColore(long id, String color) throws LampadinaNonTrovataException {
+        gestore.setColor(id, color);
+    }
+
+    public void cambiaIntensita(long id, double intensita) throws LampadinaNonTrovataException{
+        gestore.setIntensita(id, intensita);
     }
 
     public void accendiTutte() {

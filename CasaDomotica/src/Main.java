@@ -158,7 +158,7 @@ public class Main {
                                     case 1:
                                         System.out.print("Nuovo colore: ");
                                         String colore = in.next();
-
+                                        casa.getGestore().cambiaColore(id, colore);
                                         System.out.println("Colore aggiornato!");
                                         break;
                                     case 2:
@@ -171,8 +171,8 @@ public class Main {
                                         break;
                                     case 4:
                                         System.out.print("Nuova intensità (0-100): ");
-                                        int intensita = in.nextInt();
-
+                                        double intensita = in.nextDouble();
+                                        casa.getGestore().cambiaIntensita(id, intensita);
                                         System.out.println("Intensità aggiornata!");
                                         break;
                                     case 5:

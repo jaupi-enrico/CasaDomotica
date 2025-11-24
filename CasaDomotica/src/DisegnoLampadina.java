@@ -62,7 +62,7 @@ public class DisegnoLampadina {
         return true;
     }
 
-    public void accendi(int intensita) {
+    public void accendi(double intensita) {
         draw(intensita);
     }
 

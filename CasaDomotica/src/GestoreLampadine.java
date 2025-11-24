@@ -17,26 +17,17 @@ public class GestoreLampadine {
     }
 
     public void eliminaLampadina(long id) throws LampadinaNonTrovataException {
-        Lampadina l = getLampadinaById(id);
-        if (l == null) {
-            throw new LampadinaNonTrovataException(id);
-        }
+        Lampadina l = getLampadina(id);
         arrayLampadine.remove(l);
     }
 
     public void accendi(long id) throws LampadinaNonTrovataException {
-        Lampadina l = getLampadinaById(id);
-        if (l == null) {
-            throw new LampadinaNonTrovataException(id);
-        }
+        Lampadina l = getLampadina(id);
         l.accendi();
     }
 
     public void spegni(long id) throws LampadinaNonTrovataException {
-        Lampadina l = getLampadinaById(id);
-        if (l == null) {
-            throw new LampadinaNonTrovataException(id);
-        }
+        Lampadina l = getLampadina(id);
         l.spegni();
     }
 
@@ -78,5 +69,15 @@ public class GestoreLampadine {
             return 1;
         }
         return arrayLampadine.getLast().getId() + 1;
+    }
+
+    public void setColor(long id, String color) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.setColore(color);
+    }
+
+    public void setIntensita(long id, double intensita) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.setIntensita(intensita);
     }
 }

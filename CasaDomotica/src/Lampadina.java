@@ -4,13 +4,13 @@ public class Lampadina {
     private long id;
     private Posizione posizione;
     private double potenza;
-    private int intensita;
+    private double intensita;
     private String colore;
     private String nome;
     private boolean acceso;
     private DisegnoLampadina disegno;
 
-    public Lampadina(long id, double potenza, Posizione p, String nome, int intensita, String colore) {
+    public Lampadina(long id, double potenza, Posizione p, String nome, double intensita, String colore) {
         this.id = id;
         if (potenza < 0)
             potenza = -potenza;
@@ -51,7 +51,7 @@ public class Lampadina {
     public double getPotenza() {
         return this.potenza;
     }
-    public int getIntensita() {
+    public double getIntensita() {
         return intensita;
     }
     public String getColore() {
@@ -66,6 +66,8 @@ public class Lampadina {
 
     public void setColore(String colore) {
         this.colore = colore;
+        disegno.setColor(colore);
+        disegna();
     }
     public void setNome(String nome) {
         this.nome = nome;
@@ -77,21 +79,14 @@ public class Lampadina {
         this.id = id;
     }
 
-    public void aumentaIlluminazione() {
-        if (this.intensita != 100){
-            this.intensita += 10;
-        }
-    }
-
-    public void diminuisciIluminazione() {
-        if (this.intensita != 0){
-            this.intensita -= 10;
-        }
+    public void setIntensita(double intensita) {
+        this.intensita = intensita;
+        disegno.draw(intensita);
     }
 
     public void accendi() {
         this.acceso = true;
-        disegno.accendi(intensita);
+        disegna();
     }
 
     public void spegni() {
