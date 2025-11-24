@@ -69,4 +69,9 @@ public class DisegnoLampadina {
     public void spegni() {
         draw(0);
     }
+
+    public void rimuovi() {
+        palla.remove();
+        disegno.remove();
+    }
 }

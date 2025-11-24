@@ -29,15 +29,18 @@ public class CasaGrafica {
     }
 
     public void togliDisegnoLamopadine() {
-
+        ArrayList<Lampadina> arr = casa.getGestore().getTutte();
+        for (Lampadina l : arr) {
+            l.togliDisegno();
+        }
     }
 
-    public void disegnaLampadina(long id) {
-
+    public void disegnaLampadina(long id) throws LampadinaNonTrovataException {
+        casa.disegna(id);
     }
 
-    public void togliDisegnoLampadina(long id) {
-
+    public void togliDisegnoLampadina(long id) throws LampadinaNonTrovataException {
+        casa.togliDisegno(id);
     }
 
     public void creaMenu() {

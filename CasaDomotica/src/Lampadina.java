@@ -98,6 +98,10 @@ public class Lampadina {
         disegno.accendi(intensita);
     }
 
+    public void togliDisegno() {
+        disegno.rimuovi();
+    }
+
     @Override
     public String toString(){
         String stato;

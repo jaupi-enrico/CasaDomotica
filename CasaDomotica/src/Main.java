@@ -106,7 +106,7 @@ public class Main {
                         double potenza = in.nextDouble();
 
                         casa.addLamp(potenza, posTrovata, nome, 50, colore);
-
+                        casa.disegnaLampadine();
                         System.out.println("Lampadina aggiunta con successo.");
                     } catch (LampadinaDuplicataException e) {
                         System.out.println("Esiste già una lampadina in questo luogo!");
@@ -128,14 +128,15 @@ public class Main {
                 case 4 -> {
                     System.out.print("Inserisci numero lampadina:");
                     long id = in.nextLong();
+                    casa.togliDisegnoLamopadine();
                     casa.apriMenu();
                     try {
                         casa.selectLamp(id);
+                        casa.disegnaLampadina(id);
                     } catch (LampadinaNonTrovataException e) {
                         System.out.println("Lampadina non trovata");
                         return;
                     }
-
                     System.out.println("\nScegli cosa fare:");
                     System.out.println("1) Modifica lampadina");
                     System.out.println("2) Esci");
@@ -191,6 +192,13 @@ public class Main {
                         System.out.println("Uscita dal menu.");
                     }
                     casa.deselectLamps();
+                    try {
+                        casa.togliDisegnoLampadina(id);
+                    } catch (LampadinaNonTrovataException e) {
+                        System.out.println("Lampadina non trovata");
+                        return;
+                    }
+                    casa.disegnaLampadine();
                 }
 
                 case 5 -> {

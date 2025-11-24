@@ -11,7 +11,10 @@ public class OpzioneGrafica {
         this.id = id;
         this.riquadro = riquadro;
         this.nome = new Text(riquadro.getX(), riquadro.getY(), nomeStr);
-        this.nome.grow(this.riquadro.getWidth() - this.nome.getWidth(), this.riquadro.getHeight() - this.nome.getHeight());
+        double diffLenght = riquadro.getWidth() - nome.getWidth();
+        double diffHeight = riquadro.getHeight() - nome.getHeight();
+        this.nome.grow(diffLenght / 2.0, diffHeight / 2.0);
+        this.nome.translate(diffLenght / 2, diffHeight/2);
     }
 
     public void open() {

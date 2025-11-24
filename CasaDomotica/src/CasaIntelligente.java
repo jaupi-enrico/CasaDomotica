@@ -6,22 +6,6 @@ public class CasaIntelligente {
         this.gestore = new GestoreLampadine();
     }
 
-    public void accendiStanza(String stanza) {
-        for (Lampadina l : gestore.getTutte()) {
-            if (l.getPosizione().getStanza().equalsIgnoreCase(stanza)) {
-                l.accendi();
-            }
-        }
-    }
-
-    public void spegniStanza(String stanza) {
-        for (Lampadina l : gestore.getTutte()) {
-            if (l.getPosizione().getStanza().equalsIgnoreCase(stanza)) {
-                l.spegni();
-            }
-        }
-    }
-
     public String riepilogoCasa() {
         int accese = 0;
         int spente = 0;
@@ -53,6 +37,14 @@ public class CasaIntelligente {
 
     public void cambiaIntensita(long id, double intensita) throws LampadinaNonTrovataException{
         gestore.setIntensita(id, intensita);
+    }
+
+    public void disegna(long id) throws LampadinaNonTrovataException {
+        gestore.disegna(id);
+    }
+
+    public void togliDisegno(long id) throws LampadinaNonTrovataException {
+        gestore.togliDisegno(id);
     }
 
     public void accendiTutte() {

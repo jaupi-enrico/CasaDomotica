@@ -80,4 +80,14 @@ public class GestoreLampadine {
         Lampadina l = getLampadina(id);
         l.setIntensita(intensita);
     }
+
+    public void disegna(long id) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.disegna();
+    }
+
+    public void togliDisegno(long id) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.togliDisegno();
+    }
 }
