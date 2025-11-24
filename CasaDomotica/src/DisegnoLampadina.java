@@ -13,30 +13,37 @@ public class DisegnoLampadina {
         this.potenza = potenza;
 
         disegno = new Picture("lampadinaImg.png");
-        double originalX = disegno.getWidth();
-        double originalY = disegno.getHeight();
 
-        disegno.grow((width - disegno.getWidth()) / 2.0, (height - disegno.getHeight()) / 2.0);
-        disegno.translate(x + width/2 - originalX / 2, y + height/2 -originalY / 2);
+        disegno.translate(x, y);
+        disegno.resizeTo(40, 40);
+
 
         palla = new Ellipse(x, y, potenza, potenza);
         if(!setColor(color)) {
             System.out.println("\nColore non trovato");
         }
-        palla.translate(width / 2  - potenza / 2, height / 2- potenza / 2);
+        palla.translate((width - potenza) / 2, (height - potenza) / 2);
     }
 
-    public void undraw() {
-
+    public void remove() {
+        palla.remove();
+        disegno.remove();
     }
 
     public void draw(double intensita) {
-        palla.grow(potenza/2 * intensita/100 - palla.getWidth()/2.0, potenza/2 * intensita/100 - palla.getHeight()/2.0);
+        double diametro = potenza * intensita / 100.0;
 
+        if (diametro < 0) diametro = 0;
+
+        double nx = x + (width - diametro) / 2;
+        double ny = y + (height - diametro) / 2;
+
+        palla.setSizeAndPosition(nx, ny, diametro, diametro);
 
         palla.fill();
         disegno.draw();
     }
+
 
     public boolean setColor(String color) {
         switch (color.toLowerCase()) {

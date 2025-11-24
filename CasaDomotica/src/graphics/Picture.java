@@ -291,6 +291,34 @@ public class Picture implements Shape
         Canvas.getInstance().show(this);
     }
 
+    public void resizeTo(double newWidth, double newHeight) {
+        if (image == null) return;
+
+        int w = (int) Math.round(newWidth);
+        int h = (int) Math.round(newHeight);
+
+        if (w <= 0 || h <= 0) return;
+
+        BufferedImage newImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImg.createGraphics();
+        g.drawImage(image, 0, 0, w, h, null);
+        g.dispose();
+
+        image = newImg;
+
+        xGrow = 0;
+        yGrow = 0;
+
+        label.setIcon(new ImageIcon(image));
+
+        Canvas.getInstance().repaint();
+    }
+
+
+    public void remove() {
+        Canvas.getInstance().remove(this);
+    }
+
     /**
      * Draws this shape.
      * @param g2 the graphics context

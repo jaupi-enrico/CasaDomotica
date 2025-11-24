@@ -67,8 +67,7 @@ public class CasaGrafica {
         }
 
         if (menu.getWidth() == 0) {
-            menu.grow(150, 0);
-            menu.translate(150, 0);
+            menu.grow(300, 0);
         }
 
         for (OpzioneGrafica option : lampadineMenu) {
@@ -80,8 +79,7 @@ public class CasaGrafica {
         if (menu == null) return;
 
         if (menu.getWidth() == 300) {
-            menu.translate(-150, 0);
-            menu.grow(-150, 0);
+            menu.grow(-300, 0);
         }
 
         for (OpzioneGrafica option : lampadineMenu) {

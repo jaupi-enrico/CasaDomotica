@@ -100,7 +100,7 @@ public class Lampadina {
     }
 
     public void disegna() {
-        disegno.draw(intensita);
+        disegno.accendi(intensita);
     }
 
     @Override

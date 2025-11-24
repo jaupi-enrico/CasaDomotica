@@ -124,6 +124,10 @@ public class Line implements Shape
         Canvas.getInstance().show(this);
     }
 
+    public void remove() {
+        Canvas.getInstance().remove(this);
+    }
+
     public String toString()
     {
         return "Line[x1=" + x1 + ",y1=" + y1 + ",x2=" + x2 + ",y2=" + y2 + "]";

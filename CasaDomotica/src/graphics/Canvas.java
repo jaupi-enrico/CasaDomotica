@@ -106,9 +106,9 @@ public class Canvas
         }
     }
 
-    public static Canvas getInstance()
-    {
-        canvas.frame.setVisible(true); // In case it was closed in BlueJ
+    public static Canvas getInstance() {
+        if (canvas.frame != null)
+            canvas.frame.setVisible(true);
         return canvas;
     }
 
@@ -118,6 +118,11 @@ public class Canvas
         {
             shapes.add(s);
         }
+        repaint();
+    }
+
+    public void remove(Shape s) {
+        shapes.remove(s);
         repaint();
     }
 
@@ -189,5 +194,12 @@ public class Canvas
             System.err.println("Was unable to save the image to " + fileName);
         }
     	g.dispose();    	
+    }
+
+    public void close() {
+        if (frame != null) {
+            frame.dispose();
+            frame = null;
+        }
     }
 }

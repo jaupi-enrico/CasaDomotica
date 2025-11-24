@@ -5,39 +5,28 @@ public class OpzioneGrafica {
     private Text nome;
     private String id;
 
-    private double initialX, initialY; // posizione iniziale del testo
-    private double initialWidth; // larghezza iniziale riquadro
     private boolean isOpen = false;
 
     OpzioneGrafica(Rectangle riquadro, String nomeStr, String id) {
         this.id = id;
         this.riquadro = riquadro;
         this.nome = new Text(riquadro.getX(), riquadro.getY(), nomeStr);
-
-        this.initialX = nome.getX();
-        this.initialY = nome.getY();
-        this.initialWidth = riquadro.getWidth();
+        this.nome.grow(this.riquadro.getWidth() - this.nome.getWidth(), this.riquadro.getHeight() - this.nome.getHeight());
     }
 
     public void open() {
         if (!isOpen) {
-            riquadro.grow(150, 0);
-            riquadro.translate(150, 0);
-            nome.translate( nome.getWidth(), 0 );
-            System.out.println(nome);
+            riquadro.draw();
+            nome.draw();
             isOpen = true;
         }
-        riquadro.draw();
-        nome.draw();
     }
 
 
     public void close() {
         if (isOpen) {
-            riquadro.translate(-150, 0);
-            riquadro.grow(-150, 0);
-            nome.translate(-nome.getWidth(), 0);
-            System.out.println(nome);
+            riquadro.remove();
+            nome.remove();
             isOpen = false;
         }
     }

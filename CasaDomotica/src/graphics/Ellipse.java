@@ -76,18 +76,24 @@ public class Ellipse implements Shape
     }
     
     /**
-     * Resizes this ellipse both horizontally and vertically.
-     * @param dw the amount by which to resize the width on each side
-     * @param dw the amount by which to resize the height on each side
+     * @param dw the amount by which to resize the width
+     * @param dw the amount by which to resize the height
      */
     public void grow(double dw, double dh)
     {
-        width += 2 * dw;
-        height += 2 * dh;
-        x -= dw;
-        y -= dh;
+        width += dw;
+        height += dh;
         Canvas.getInstance().repaint();
     }
+
+    public void setSizeAndPosition(double newX, double newY, double newWidth, double newHeight) {
+        this.x = newX;
+        this.y = newY;
+        this.width = newWidth;
+        this.height = newHeight;
+        Canvas.getInstance().repaint();
+    }
+
 
     /**
      * Sets the color of this ellipse.
@@ -115,6 +121,10 @@ public class Ellipse implements Shape
     {
         filled = true;
         Canvas.getInstance().show(this);
+    }
+
+    public void remove() {
+        Canvas.getInstance().remove(this);
     }
 
     public String toString()

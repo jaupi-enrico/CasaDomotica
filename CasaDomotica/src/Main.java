@@ -1,3 +1,5 @@
+import graphics.Canvas;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -199,7 +201,7 @@ public class Main {
                 case 6 -> {
                     running = false;
                     System.out.println("Uscita dal programma...");
-                    System.out.println("Chiudi la finestra per spegnere");
+                    Canvas.getInstance().close();
                 }
 
                 default -> {

@@ -106,6 +106,10 @@ public class Text implements Shape
     {
         Canvas.getInstance().show(this);
     }
+
+    public void remove() {
+        Canvas.getInstance().remove(this);
+    }
    
     public String toString()
     {

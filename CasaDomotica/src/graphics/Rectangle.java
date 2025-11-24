@@ -92,10 +92,8 @@ public class Rectangle implements Shape
     */
     public void grow(double dw, double dh)
     {
-        width += 2 * dw;
-        height += 2 * dh;
-        x -= dw;
-        y -= dh;
+        width += dw;
+        height += dh;
         Canvas.getInstance().repaint();
     }
 
@@ -125,6 +123,10 @@ public class Rectangle implements Shape
     {
         filled = true;
         Canvas.getInstance().show(this);
+    }
+
+    public void remove() {
+        Canvas.getInstance().remove(this);
     }
 
     public String toString()
