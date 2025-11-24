@@ -13,13 +13,13 @@ public class OpzioneGrafica {
         this.riquadro = riquadro;
         this.nome = new Text(riquadro.getX(), riquadro.getY(), nomeStr);
         this.idText = new Text(riquadro.getX(), riquadro.getY(), id);
-        double diffLenght = riquadro.getWidth() - nome.getWidth() - 120;
+        double diffLenght = riquadro.getWidth() - nome.getWidth() - 80;
         double diffHeight = riquadro.getHeight() - nome.getHeight();
         this.nome.grow(diffLenght / 2.0, diffHeight / 2.0);
         double diffHeightId = riquadro.getHeight() - idText.getHeight();
-        this.idText.grow(60, diffHeightId / 2.0);
-        this.nome.translate(diffLenght / 2 + 120, diffHeight/2);
-        this.idText.translate(60, diffHeightId / 2.0);
+        this.idText.grow(40, diffHeightId / 2.0);
+        this.nome.translate(diffLenght / 2 + 80, diffHeight/2);
+        this.idText.translate(40, diffHeightId / 2.0);
     }
 
     public void open() {

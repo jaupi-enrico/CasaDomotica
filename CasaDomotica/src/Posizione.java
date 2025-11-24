@@ -40,7 +40,7 @@ public class Posizione {
         return "x=" + x + " y=" + y + " stanza=" + stanza;
     }
 
-    public Posizione toPosizione(String info){
+    public static Posizione toPosizione(String info){
         Posizione p = new Posizione(0, 0, "");
         String[] tokens = info.split(" ");
         ArrayList<String> chiavi = new ArrayList<>();

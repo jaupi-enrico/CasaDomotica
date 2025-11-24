@@ -47,6 +47,18 @@ public class CasaIntelligente {
         gestore.togliDisegno(id);
     }
 
+    public void disegnaWithId(long id) throws LampadinaNonTrovataException {
+        gestore.disegnaWithId(id);
+    }
+
+    public void togliDisegnoWithId(long id) throws LampadinaNonTrovataException {
+        gestore.togliDisegnoWithId(id);
+    }
+
+    public void removeLampadina(long id) throws LampadinaNonTrovataException {
+        gestore.removeLampadina(id);
+    }
+
     public void accendiTutte() {
         gestore.accendiTutte();
     }

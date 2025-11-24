@@ -21,6 +21,13 @@ public class CasaGrafica {
         return casa;
     }
 
+    public void disegnaLampadineWithId() {
+        ArrayList<Lampadina> arr = casa.getGestore().getTutte();
+        for (Lampadina l : arr) {
+            l.disegnaWithId();
+        }
+    }
+
     public void disegnaLampadine() {
         ArrayList<Lampadina> arr = casa.getGestore().getTutte();
         for (Lampadina l : arr) {
@@ -28,7 +35,14 @@ public class CasaGrafica {
         }
     }
 
-    public void togliDisegnoLamopadine() {
+    public void togliDisegnoLampadineWithId() {
+        ArrayList<Lampadina> arr = casa.getGestore().getTutte();
+        for (Lampadina l : arr) {
+            l.togliDisegnoWithId();
+        }
+    }
+
+    public void togliDisegnoLampadine() {
         ArrayList<Lampadina> arr = casa.getGestore().getTutte();
         for (Lampadina l : arr) {
             l.togliDisegno();
@@ -39,8 +53,28 @@ public class CasaGrafica {
         casa.disegna(id);
     }
 
+    public void disegnaLampadinaWithId(long id) throws LampadinaNonTrovataException {
+        casa.disegnaWithId(id);
+    }
+
     public void togliDisegnoLampadina(long id) throws LampadinaNonTrovataException {
         casa.togliDisegno(id);
+    }
+
+    public void togliDisegnoLampadinaWithId(long id) throws LampadinaNonTrovataException {
+        casa.togliDisegnoWithId(id);
+    }
+
+    public void toggleLampadine() {
+        ArrayList<Lampadina> arr = casa.getGestore().getTutte();
+        for (Lampadina l : arr) {
+            if(l.getStato()) {
+                l.spegni();
+            }
+            else {
+                l.accendi();
+            }
+        }
     }
 
     public void creaMenu() {
@@ -90,6 +124,16 @@ public class CasaGrafica {
         }
     }
 
+    public boolean isMenuOpen() {
+        if (menu == null) {
+            return false;
+        }
+        if (menu.getWidth() == 300) {
+            return true;
+        }
+        return false;
+    }
+
     public void addLamp(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
         casa.addLampadina(potenza, pos, nome, intensita, colore);
         if (menu != null) {
@@ -112,6 +156,28 @@ public class CasaGrafica {
         }
     }
 
+    public void addLamp(Lampadina l) throws LampadinaDuplicataException {
+        casa.getGestore().aggiungiLampadina(l);
+        if (menu != null) {
+            if (!lampadineMenu.isEmpty()) {
+                OpzioneGrafica last = lampadineMenu.getLast();
+                Rectangle r = new Rectangle(last.getRiquadro().getX(), last.getRiquadro().getY() + last.getRiquadro().getHeight(), 300, 50);
+                r.setColor(Color.BLACK);
+                OpzioneGrafica opzione = new OpzioneGrafica(r, l.getNome(), Long.toString(casa.getGestore().getTutte().getLast().getId()));
+                lampadineMenu.add(opzione);
+            }
+            else {
+                Rectangle r = new Rectangle(casaImg.getMaxX(), 0, 300, 50);
+                r.setColor(Color.BLACK);
+                OpzioneGrafica opzione = new OpzioneGrafica(r, l.getNome(), Long.toString(casa.getGestore().getTutte().getLast().getId()));
+                lampadineMenu.add(opzione);
+            }
+            if (menu.getWidth() == 300) {
+                apriMenu();
+            }
+        }
+    }
+
     public OpzioneGrafica getOpzione(long id) throws LampadinaNonTrovataException {
         for(OpzioneGrafica option : lampadineMenu) {
             if(option.getId().equals(Long.toString(id))) {
@@ -124,6 +190,25 @@ public class CasaGrafica {
     public void selectLamp(long id) throws LampadinaNonTrovataException {
         getOpzione(id).getRiquadro().setColor(Color.BLUE);
         getOpzione(id).getRiquadro().fill();
+    }
+
+    public void rimuoviLampadina(long id) throws LampadinaNonTrovataException {
+        togliDisegnoLampadinaWithId(id);
+        chiudiMenu();
+        OpzioneGrafica option = getOpzione(id);
+        double X = option.getRiquadro().getX();
+        double Y = option.getRiquadro().getY();
+        boolean trovato = false;
+        for (int i = 0; i < lampadineMenu.size(); i++) {
+            if (lampadineMenu.get(i) == option) {
+                trovato = true;
+            }
+            if (trovato) {
+                lampadineMenu.get(i).getRiquadro().setPosition(X, Y);
+                Y += lampadineMenu.get(i).getRiquadro().getHeight();
+            }
+        }
+        casa.removeLampadina(id);
     }
 
     public void deselectLamps() {

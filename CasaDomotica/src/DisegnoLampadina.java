@@ -3,11 +3,12 @@ import graphics.*;
 public class DisegnoLampadina {
     private Ellipse palla;
     private Picture disegno;
+    private Text id = null;
     private double x, y;
     private double width = 40, height = 40;
     private double potenza;
 
-    public DisegnoLampadina(double x, double y, String color, double potenza) {
+    public DisegnoLampadina(double x, double y, String color, double potenza, long id) {
         this.x = x;
         this.y = y;
         this.potenza = potenza;
@@ -23,6 +24,11 @@ public class DisegnoLampadina {
             System.out.println("\nColore non trovato");
         }
         palla.translate((width - potenza) / 2, (height - potenza) / 2);
+
+        double posX = disegno.getMaxX();
+        double posY = disegno.getY();
+        this.id = new Text(posX, posY, Long.toString(id));
+        this.id.grow(15, 15);
     }
 
     public void remove() {
@@ -44,6 +50,13 @@ public class DisegnoLampadina {
         disegno.draw();
     }
 
+    public void drawId() {
+        this.id.draw();
+    }
+
+    public void removeId() {
+        id.remove();
+    }
 
     public boolean setColor(String color) {
         switch (color.toLowerCase()) {

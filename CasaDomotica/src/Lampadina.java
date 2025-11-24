@@ -20,7 +20,7 @@ public class Lampadina {
         this.colore = colore;
         this.acceso = true;
         this.posizione = p;
-        this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore, potenza);
+        this.disegno = new DisegnoLampadina(p.getX(), p.getY(), this.colore, potenza, this.id);
     }
 
     public Lampadina (String info){
@@ -34,12 +34,12 @@ public class Lampadina {
         }
         this.id = Long.parseLong(valori.get(0));
         this.nome = valori.get(1);
-        this.posizione = this.posizione.toPosizione(valori.get(2));
+        this.posizione = Posizione.toPosizione(valori.get(2));
         this.potenza = Double.parseDouble(valori.get(3));
-        this.intensita = Integer.parseInt(valori.get(4));
+        this.intensita = Double.parseDouble(valori.get(4));
         this.colore = valori.get(5);
-        if(valori.get(6).equals("Acceso") ) this.acceso = true;
-        else this.acceso = false;
+        this.acceso = valori.get(6).equals("Acceso");
+        this.disegno = new DisegnoLampadina(this.posizione.getX(), this.posizione.getY(), this.colore, this.potenza, this.id);
     }
 
     public long getId() {
@@ -100,6 +100,16 @@ public class Lampadina {
 
     public void togliDisegno() {
         disegno.rimuovi();
+    }
+
+    public void disegnaWithId() {
+        disegno.accendi(intensita);
+        disegno.drawId();
+    }
+
+    public void togliDisegnoWithId() {
+        disegno.rimuovi();
+        disegno.removeId();
     }
 
     @Override

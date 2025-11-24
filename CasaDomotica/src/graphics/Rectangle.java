@@ -129,6 +129,12 @@ public class Rectangle implements Shape
         Canvas.getInstance().remove(this);
     }
 
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+        Canvas.getInstance().repaint();
+    }
+
     public String toString()
     {
         return "Rectangle[x=" + getX() + ",y=" + getY() + ",width=" + getWidth() + ",height=" + getHeight() + "]";

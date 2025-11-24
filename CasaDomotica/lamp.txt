@@ -1,0 +1,1 @@
+ID:1,Nome:Singh,Posizione:x=140.0 y=330.0 stanza=bagno,Potenza:100.0,Intensità:50.0,Colore:RED,Stato:Acceso

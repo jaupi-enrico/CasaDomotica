@@ -90,4 +90,19 @@ public class GestoreLampadine {
         Lampadina l = getLampadina(id);
         l.togliDisegno();
     }
+
+    public void disegnaWithId(long id) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.disegnaWithId();
+    }
+
+    public void togliDisegnoWithId(long id) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        l.togliDisegnoWithId();
+    }
+
+    public void removeLampadina(long id) throws LampadinaNonTrovataException {
+        Lampadina l = getLampadina(id);
+        arrayLampadine.remove(l);
+    }
 }
