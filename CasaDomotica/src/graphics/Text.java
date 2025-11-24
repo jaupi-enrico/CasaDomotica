@@ -13,6 +13,7 @@ public class Text implements Shape
     private double xGrow;
     private double yGrow;
 
+
     /**
      * Constructs a text at a given location.
      * @param x the leftmost x-position of the shape
@@ -108,7 +109,7 @@ public class Text implements Shape
    
     public String toString()
     {
-        return "Text[x=" + getX() + ",y=" + getY() + ",message=" + label.getText() + "]";
+        return "Text[x=" + getX() + ",y=" + getY() + ",message=" + label.getText() + ",xGrow=" + getWidth() + ",yGrow" + getHeight() + "]";
     }
 
     public void paintShape(Graphics2D g2)

@@ -1,41 +1,52 @@
-import graphics.Rectangle;
-import graphics.Text;
+import graphics.*;
 
 public class OpzioneGrafica {
-    Rectangle riquadro;
-    Text nome;
-    Text idTesto;
-    String id;
-    double rapportoNome;
+    private Rectangle riquadro;
+    private Text nome;
+    private String id;
 
-    OpzioneGrafica(Rectangle riquadro, String nome, String id) {
+    private double initialX, initialY; // posizione iniziale del testo
+    private double initialWidth; // larghezza iniziale riquadro
+    private boolean isOpen = false;
+
+    OpzioneGrafica(Rectangle riquadro, String nomeStr, String id) {
         this.id = id;
         this.riquadro = riquadro;
-        this.nome = new Text(riquadro.getX(), riquadro.getY(), nome);
-        resize();
+        this.nome = new Text(riquadro.getX(), riquadro.getY(), nomeStr);
+
+        this.initialX = nome.getX();
+        this.initialY = nome.getY();
+        this.initialWidth = riquadro.getWidth();
     }
 
-    private void resize() {
-        if (riquadro.getWidth() != 0) {
-            rapportoNome = (double) nome.getWidth() / nome.getHeight();
-            nome.translate(0, -nome.getHeight() / 2.0);
-            nome.grow(0, riquadro.getHeight() / 2.0 - nome.getHeight() / 2.0);
-            nome.translate((riquadro.getHeight() / rapportoNome) / 2, riquadro.getHeight() / 2.0);
-
-        }
-    }
-
-    public void open(double mesure) {
-        if (riquadro.getWidth() == 0) {
-            riquadro.translate(mesure / 2, 0);
-            riquadro.grow(mesure / 2, 0);
+    public void open() {
+        if (!isOpen) {
+            riquadro.grow(150, 0);
+            riquadro.translate(150, 0);
+            nome.translate( nome.getWidth(), 0 );
+            System.out.println(nome);
+            isOpen = true;
         }
         riquadro.draw();
         nome.draw();
     }
 
+
     public void close() {
-        riquadro.translate(-riquadro.getWidth()/2.0, 0);
-        riquadro.grow(-riquadro.getWidth()/2.0, 0);
+        if (isOpen) {
+            riquadro.translate(-150, 0);
+            riquadro.grow(-150, 0);
+            nome.translate(-nome.getWidth(), 0);
+            System.out.println(nome);
+            isOpen = false;
+        }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Rectangle getRiquadro() {
+        return riquadro;
     }
 }

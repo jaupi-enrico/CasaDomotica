@@ -72,7 +72,7 @@ public class CasaGrafica {
         }
 
         for (OpzioneGrafica option : lampadineMenu) {
-            option.open(300);
+            option.open();
         }
     }
 
@@ -94,7 +94,7 @@ public class CasaGrafica {
         if (menu != null) {
             if (!lampadineMenu.isEmpty()) {
                 OpzioneGrafica last = lampadineMenu.getLast();
-                Rectangle r = new Rectangle(last.riquadro.getX(), last.riquadro.getY() + last.riquadro.getHeight(), 300, 50);
+                Rectangle r = new Rectangle(last.getRiquadro().getX(), last.getRiquadro().getY() + last.getRiquadro().getHeight(), 300, 50);
                 r.setColor(Color.BLACK);
                 OpzioneGrafica opzione = new OpzioneGrafica(r, nome, Long.toString(casa.getGestore().getTutte().getLast().getId()));
                 lampadineMenu.add(opzione);
@@ -113,7 +113,7 @@ public class CasaGrafica {
 
     public OpzioneGrafica getOpzione(long id) throws LampadinaNonTrovataException {
         for(OpzioneGrafica option : lampadineMenu) {
-            if(option.id.equals(Long.toString(id))) {
+            if(option.getId().equals(Long.toString(id))) {
                 return option;
             }
         }
@@ -121,14 +121,14 @@ public class CasaGrafica {
     }
 
     public void selectLamp(long id) throws LampadinaNonTrovataException {
-        getOpzione(id).riquadro.setColor(Color.BLUE);
-        getOpzione(id).riquadro.fill();
+        getOpzione(id).getRiquadro().setColor(Color.BLUE);
+        getOpzione(id).getRiquadro().fill();
     }
 
     public void deselectLamps() {
         for (OpzioneGrafica opzione : lampadineMenu) {
-            opzione.riquadro.setColor(Color.BLACK);
-            opzione.riquadro.draw();
+            opzione.getRiquadro().setColor(Color.BLACK);
+            opzione.getRiquadro().draw();
         }
     }
 }
