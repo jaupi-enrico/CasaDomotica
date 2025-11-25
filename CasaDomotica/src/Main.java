@@ -1,4 +1,5 @@
 import graphics.Canvas;
+import graphics.Color;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -98,8 +99,37 @@ public class Main {
                         }
                         while (!trovato);
 
-                        System.out.print("\nColore (yellow, blue, green, red): ");
-                        String colore = in.next().toUpperCase();
+                        System.out.println("\nOpzioni colore:");
+                        System.out.println("1) Lista colori");
+                        System.out.println("2) Personalizzato");
+                        System.out.print("Scelta: ");
+                        scelta = in.nextInt();
+                        Color colore = Color.YELLOW;
+                        if (scelta == 2) {
+                            System.out.print("\nColore personalizzato:");
+                            System.out.print("Red (0-255):");
+                            int red = in.nextInt();
+                            System.out.print("Green (0-255):");
+                            int green = in.nextInt();
+                            System.out.print("Blue (0-255):");
+                            int blue = in.nextInt();
+                            colore = Color.getColor(red, green, blue);
+                        }
+                        else {
+                            System.out.println("\nLista colori:");
+                            ArrayList<String> colori = Color.getColorList();
+                            for (int i = 0; i < colori.size(); i++) {
+                                System.out.println((i + 1) + ") " + colori.get(i));
+                            }
+                            System.out.print("\nInserisci numero colore:");
+                            scelta = in.nextInt();
+                            try {
+                                colore = Color.getColor(colori.get(scelta - 1));
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                System.out.println("Opzione non disponibile");
+                                continue;
+                            }
+                        }
 
                         System.out.print("\nPotenza massima lampadina: ");
                         double potenza = in.nextDouble();
@@ -141,7 +171,7 @@ public class Main {
                         casa.disegnaLampadina(id);
                     } catch (LampadinaNonTrovataException e) {
                         System.out.println("Lampadina non trovata");
-                        return;
+                        continue;
                     }
                     System.out.println("\nScegli cosa fare:");
                     System.out.println("1) Modifica lampadina");
@@ -164,8 +194,37 @@ public class Main {
                             try {
                                 switch (scelta) {
                                     case 1:
-                                        System.out.print("Nuovo colore: ");
-                                        String colore = in.next();
+                                        System.out.println("\nOpzioni colore:");
+                                        System.out.println("1) Lista colori");
+                                        System.out.println("2) Personalizzato");
+                                        System.out.print("Scelta: ");
+                                        scelta = in.nextInt();
+                                        Color colore = Color.YELLOW;
+                                        if (scelta == 2) {
+                                            System.out.print("\nColore personalizzato:");
+                                            System.out.print("Red (0-255):");
+                                            int red = in.nextInt();
+                                            System.out.print("Green (0-255):");
+                                            int green = in.nextInt();
+                                            System.out.print("Blue (0-255):");
+                                            int blue = in.nextInt();
+                                            colore = Color.getColor(red, green, blue);
+                                        }
+                                        else {
+                                            System.out.println("\nLista colori:");
+                                            ArrayList<String> colori = Color.getColorList();
+                                            for (int i = 0; i < colori.size(); i++) {
+                                                System.out.println((i + 1) + ") " + colori.get(i));
+                                            }
+                                            System.out.print("\nInserisci numero colore:");
+                                            scelta = in.nextInt();
+                                            try {
+                                                colore = Color.getColor(colori.get(scelta - 1));
+                                            } catch (ArrayIndexOutOfBoundsException e) {
+                                                System.out.println("Opzione non disponibile");
+                                                continue;
+                                            }
+                                        }
                                         casa.getGestore().cambiaColore(id, colore);
                                         System.out.println("Colore aggiornato!");
                                         break;
@@ -207,9 +266,13 @@ public class Main {
                         casa.togliDisegnoLampadina(id);
                     } catch (LampadinaNonTrovataException e) {
                         System.out.println("Lampadina non trovata");
-                        return;
                     }
-                    casa.disegnaLampadine();
+                    if(casa.isMenuOpen()) {
+                        casa.disegnaLampadineWithId();
+                    }
+                    else {
+                        casa.disegnaLampadine();
+                    }
                 }
 
                 case 5 -> {

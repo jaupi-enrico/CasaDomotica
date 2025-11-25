@@ -134,7 +134,7 @@ public class CasaGrafica {
         return false;
     }
 
-    public void addLamp(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
+    public void addLamp(double potenza, Posizione pos, String nome, int intensita, Color colore) throws LampadinaDuplicataException {
         casa.addLampadina(potenza, pos, nome, intensita, colore);
         if (menu != null) {
             if (!lampadineMenu.isEmpty()) {

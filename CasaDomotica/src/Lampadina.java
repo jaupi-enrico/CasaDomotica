@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import graphics.*;
 
 public class Lampadina {
     private long id;
     private Posizione posizione;
     private double potenza;
     private double intensita;
-    private String colore;
+    private Color colore;
     private String nome;
     private boolean acceso;
     private DisegnoLampadina disegno;
 
-    public Lampadina(long id, double potenza, Posizione p, String nome, double intensita, String colore) {
+    public Lampadina(long id, double potenza, Posizione p, String nome, double intensita, Color colore) {
         this.id = id;
         if (potenza < 0)
             potenza = -potenza;
@@ -37,7 +38,7 @@ public class Lampadina {
         this.posizione = Posizione.toPosizione(valori.get(2));
         this.potenza = Double.parseDouble(valori.get(3));
         this.intensita = Double.parseDouble(valori.get(4));
-        this.colore = valori.get(5);
+        this.colore = Color.getColor(valori.get(5));
         this.acceso = valori.get(6).equals("Acceso");
         this.disegno = new DisegnoLampadina(this.posizione.getX(), this.posizione.getY(), this.colore, this.potenza, this.id);
     }
@@ -54,7 +55,7 @@ public class Lampadina {
     public double getIntensita() {
         return intensita;
     }
-    public String getColore() {
+    public Color getColore() {
         return this.colore;
     }
     public String getNome() {
@@ -64,7 +65,7 @@ public class Lampadina {
         return acceso;
     }
 
-    public void setColore(String colore) {
+    public void setColore(Color colore) {
         this.colore = colore;
         disegno.setColor(colore);
         disegna();
@@ -122,7 +123,7 @@ public class Lampadina {
                 ",Posizione:" + posizione.toString() +
                 ",Potenza:" + potenza +
                 ",Intensità:" + intensita +
-                ",Colore:" + colore +
+                ",Colore:" + Color.colorToString(colore) +
                 ",Stato:" + stato;
     }
 }

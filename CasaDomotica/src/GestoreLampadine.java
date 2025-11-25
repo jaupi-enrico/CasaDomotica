@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import graphics.*;
 
 public class GestoreLampadine {
     private ArrayList<Lampadina> arrayLampadine;
@@ -71,7 +72,7 @@ public class GestoreLampadine {
         return arrayLampadine.getLast().getId() + 1;
     }
 
-    public void setColor(long id, String color) throws LampadinaNonTrovataException {
+    public void setColor(long id, Color color) throws LampadinaNonTrovataException {
         Lampadina l = getLampadina(id);
         l.setColore(color);
     }

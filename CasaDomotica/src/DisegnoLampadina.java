@@ -1,5 +1,7 @@
 import graphics.*;
 
+import java.util.ArrayList;
+
 public class DisegnoLampadina {
     private Ellipse palla;
     private Picture disegno;
@@ -8,7 +10,7 @@ public class DisegnoLampadina {
     private double width = 40, height = 40;
     private double potenza;
 
-    public DisegnoLampadina(double x, double y, String color, double potenza, long id) {
+    public DisegnoLampadina(double x, double y, Color color, double potenza, long id) {
         this.x = x;
         this.y = y;
         this.potenza = potenza;
@@ -20,9 +22,7 @@ public class DisegnoLampadina {
 
 
         palla = new Ellipse(x, y, potenza, potenza);
-        if(!setColor(color)) {
-            System.out.println("\nColore non trovato");
-        }
+        setColor(color);
         palla.translate((width - potenza) / 2, (height - potenza) / 2);
 
         double posX = disegno.getMaxX();
@@ -58,21 +58,8 @@ public class DisegnoLampadina {
         id.remove();
     }
 
-    public boolean setColor(String color) {
-        switch (color.toLowerCase()) {
-            case "red" -> palla.setColor(Color.RED);
-            case "yellow" -> palla.setColor(Color.YELLOW);
-            case "blue" -> palla.setColor(Color.BLUE);
-            case "green" -> palla.setColor(Color.GREEN);
-            case "white" -> palla.setColor(Color.WHITE);
-            case "orange" -> palla.setColor(Color.ORANGE);
-            case "gray" -> palla.setColor(Color.GRAY);
-            default -> {
-                palla.setColor(Color.YELLOW);
-                return false;
-            }
-        }
-        return true;
+    public void setColor(Color color) {
+        palla.setColor(color);
     }
 
     public void accendi(double intensita) {

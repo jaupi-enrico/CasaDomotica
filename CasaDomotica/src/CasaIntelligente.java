@@ -1,3 +1,5 @@
+import graphics.*;
+
 public class CasaIntelligente {
 
     private GestoreLampadine gestore;
@@ -31,7 +33,7 @@ public class CasaIntelligente {
         gestore.spegni(id);
     }
 
-    public void cambiaColore(long id, String color) throws LampadinaNonTrovataException {
+    public void cambiaColore(long id, Color color) throws LampadinaNonTrovataException {
         gestore.setColor(id, color);
     }
 
@@ -67,7 +69,7 @@ public class CasaIntelligente {
         gestore.spegniTutte();
     }
 
-    public void addLampadina(double potenza, Posizione pos, String nome, int intensita, String colore) throws LampadinaDuplicataException {
+    public void addLampadina(double potenza, Posizione pos, String nome, int intensita, Color colore) throws LampadinaDuplicataException {
         Lampadina l = new Lampadina(gestore.newId(), potenza, pos, nome, intensita, colore);
         gestore.aggiungiLampadina(l);
     }
