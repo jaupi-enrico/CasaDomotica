@@ -95,7 +95,7 @@ public class Color
     }
 
     public static String colorToString(Color c) {
-        if (c == null) return "personalizzato";
+        if (c == null) return "invalido";
 
         if (c.getRed() == 255 && c.getGreen() == 0 && c.getBlue() == 0) return "red";
         if (c.getRed() == 255 && c.getGreen() == 255 && c.getBlue() == 0) return "yellow";
@@ -110,8 +110,8 @@ public class Color
         if (c.getRed() == 192 && c.getGreen() == 192 && c.getBlue() == 192) return "light gray";
         if (c.getRed() == 255 && c.getGreen() == 175 && c.getBlue() == 175) return "pink";
         if (c.getRed() == 255 && c.getGreen() == 0 && c.getBlue() == 255) return "magenta";
-
-        return "personalizzato";
+        String s = "personalizzato" + "?" + c.getRed() + "&" +  c.getGreen() + "&" + c.getBlue();
+        return s;
     }
 
     /**

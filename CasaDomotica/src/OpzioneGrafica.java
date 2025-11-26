@@ -41,6 +41,18 @@ public class OpzioneGrafica {
         }
     }
 
+    public void spostaSopra() {
+        riquadro.setPosition(riquadro.getX(), riquadro.getY() - 50);
+        idText.translate(0, -50);
+        nome.translate(0, -50);
+    }
+
+    public void remove() {
+        riquadro.remove();
+        idText.remove();
+        nome.remove();
+    }
+
     public String getId() {
         return id;
     }

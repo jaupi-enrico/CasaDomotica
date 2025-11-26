@@ -194,20 +194,18 @@ public class CasaGrafica {
 
     public void rimuoviLampadina(long id) throws LampadinaNonTrovataException {
         togliDisegnoLampadinaWithId(id);
-        chiudiMenu();
         OpzioneGrafica option = getOpzione(id);
-        double X = option.getRiquadro().getX();
-        double Y = option.getRiquadro().getY();
+        option.remove();
         boolean trovato = false;
         for (int i = 0; i < lampadineMenu.size(); i++) {
             if (lampadineMenu.get(i) == option) {
                 trovato = true;
             }
             if (trovato) {
-                lampadineMenu.get(i).getRiquadro().setPosition(X, Y);
-                Y += lampadineMenu.get(i).getRiquadro().getHeight();
+                lampadineMenu.get(i).spostaSopra();
             }
         }
+        lampadineMenu.remove(option);
         casa.removeLampadina(id);
     }
 
