@@ -48,6 +48,16 @@ public class Color
     }
 
     public static Color getColor(String s) {
+        if (s.contains("personalizzato")) {
+            String[] parti = s.split("=")[1].split("&");
+            for (String string : parti) {
+                System.out.println(string);
+            }
+            int red = Integer.parseInt(parti[0]);
+            int green = Integer.parseInt(parti[1]);
+            int blue = Integer.parseInt(parti[2]);
+            return getColor(red, green, blue);
+        }
         switch (s.toLowerCase()) {
             case "red" -> {
                 return Color.RED;
@@ -110,7 +120,7 @@ public class Color
         if (c.getRed() == 192 && c.getGreen() == 192 && c.getBlue() == 192) return "light gray";
         if (c.getRed() == 255 && c.getGreen() == 175 && c.getBlue() == 175) return "pink";
         if (c.getRed() == 255 && c.getGreen() == 0 && c.getBlue() == 255) return "magenta";
-        String s = "personalizzato" + "?" + c.getRed() + "&" +  c.getGreen() + "&" + c.getBlue();
+        String s = "personalizzato" + "=" + c.getRed() + "&" +  c.getGreen() + "&" + c.getBlue();
         return s;
     }
 
