@@ -314,6 +314,11 @@ public class Picture implements Shape
         Canvas.getInstance().repaint();
     }
 
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+        Canvas.getInstance().repaint();
+    }
 
     public void remove() {
         Canvas.getInstance().remove(this);

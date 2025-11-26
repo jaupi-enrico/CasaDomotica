@@ -50,9 +50,6 @@ public class Color
     public static Color getColor(String s) {
         if (s.contains("personalizzato")) {
             String[] parti = s.split("=")[1].split("&");
-            for (String string : parti) {
-                System.out.println(string);
-            }
             int red = Integer.parseInt(parti[0]);
             int green = Integer.parseInt(parti[1]);
             int blue = Integer.parseInt(parti[2]);

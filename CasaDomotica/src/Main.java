@@ -11,14 +11,17 @@ public class Main {
             String line;
             while ((line = br.readLine()) != null) {
                 Lampadina l = new Lampadina(line);
-                casa.addLamp(l);
+                try {
+                    casa.addLamp(l);
+                }
+                catch (LampadinaDuplicataException e) {
+                    System.out.println("Una Lampadina è duplicata: " + e);
+                }
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("File con informazioni delle lampadine non trovato: " + e);
+            System.out.println("File con informazioni delle lampadine non trovato: " + e);
         } catch (IOException e) {
-            throw new RuntimeException("Errore nella lettura delle lampadine: " + e);
-        } catch (LampadinaDuplicataException e) {
-            throw new RuntimeException("Una Lampadina è duplicata: " + e);
+            System.out.println("Errore nella lettura delle lampadine: " + e);
         }
     }
 
@@ -154,7 +157,7 @@ public class Main {
                     } catch (LampadinaDuplicataException e) {
                         System.out.println("Esiste già una lampadina in questo luogo!");
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        System.out.println("Errore durante la lettura: " + e);
                     }
                 }
 
@@ -189,11 +192,21 @@ public class Main {
                     scelta = in.nextInt();
                     boolean lampRemoved = false;
                     if (scelta == 1) {
-
-                        while (scelta != 5) {
+                        casa.casaImg.remove();
+                        casa.togliDisegnoLampadineWithId();
+                        MenuLampadina menu;
+                        try {
+                            menu = new MenuLampadina(casa.getGestore().getGestore().getLampadina(id), casa.casaImg.getWidth());
+                        }
+                        catch (LampadinaNonTrovataException e) {
+                            continue;
+                        }
+                        menu.show();
+                        while (scelta != 6 && scelta != 5) {
                             System.out.println("\nMenu modifica lampadina:");
                             System.out.println("1) Cambia colore");
                             System.out.println("2) Accendi lampadina");
+                            
                             System.out.println("3) Spegni lampadina");
                             System.out.println("4) Cambia intensità");
                             System.out.println("5) Rimuovi lampadina");
@@ -206,24 +219,28 @@ public class Main {
                                     case 1:
                                         Color colore = inserisciColore();
                                         casa.getGestore().cambiaColore(id, colore);
-                                        casa.disegnaLampadinaWithId(id);
+                                        casa.togliDisegnoLampadineWithId();
+                                        menu.cambiaColore(colore);
                                         System.out.println("Colore aggiornato!");
                                         break;
                                     case 2:
                                         casa.getGestore().accediLampadina(id);
-                                        casa.disegnaLampadinaWithId(id);
+                                        casa.togliDisegnoLampadineWithId();
+                                        menu.accendi();
                                         System.out.println("Lampadina accesa!");
                                         break;
                                     case 3:
                                         casa.getGestore().spegnilampadina(id);
-                                        casa.disegnaLampadinaWithId(id);
+                                        casa.togliDisegnoLampadineWithId();
+                                        menu.spegni();
                                         System.out.println("Lampadina spenta!");
                                         break;
                                     case 4:
                                         System.out.print("Nuova intensità (0-100): ");
                                         double intensita = in.nextDouble();
                                         casa.getGestore().cambiaIntensita(id, intensita);
-                                        casa.disegnaLampadinaWithId(id);
+                                        casa.togliDisegnoLampadineWithId();
+                                        menu.cambiaIntensita(intensita);
                                         System.out.println("Intensità aggiornata!");
                                         break;
                                     case 5:
@@ -243,6 +260,8 @@ public class Main {
                                 return;
                             }
                         }
+                        menu.remove();
+                        casa.casaImg.draw();
                     } else {
                         System.out.println("Uscita dal menu.");
                     }
