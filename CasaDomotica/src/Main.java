@@ -180,6 +180,7 @@ public class Main {
                     scelta = in.nextInt();
                     boolean lampRemoved = false;
                     if (scelta == 1) {
+
                         while (scelta != 5) {
                             System.out.println("\nMenu modifica lampadina:");
                             System.out.println("1) Cambia colore");
