@@ -1,5 +1,4 @@
-import graphics.Canvas;
-import graphics.Color;
+import graphics.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -7,42 +6,80 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static void loadLamps(String src, CasaGrafica casa) {
-        try (BufferedReader br = new BufferedReader(new FileReader(src))) {
+    private static void loadLamps(CasaGrafica casa) {
+        try (BufferedReader br = new BufferedReader(new FileReader("lamp.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 Lampadina l = new Lampadina(line);
                 casa.addLamp(l);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("File con info lampadine non trovato. " + e);
+            throw new RuntimeException("File con informazioni delle lampadine non trovato: " + e);
         } catch (IOException e) {
-            throw new RuntimeException("Errore nella lettura nel file: " + e);
+            throw new RuntimeException("Errore nella lettura delle lampadine: " + e);
         } catch (LampadinaDuplicataException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Una Lampadina è duplicata: " + e);
         }
     }
 
 
     private static ArrayList<Posizione> loadPos() throws IOException {
         ArrayList<Posizione> pos = new ArrayList<>();
-        FileReader fr = null;
-        try {
-            fr = new FileReader("pos.txt");
+        try (BufferedReader br = new BufferedReader(new FileReader("pos.txt"));){
+            Posizione posizione = null;
+            String riga;
+            while ((riga = br.readLine()) != null) {
+                String[] s = riga.split(":");;
+                posizione = new Posizione(Integer.parseInt(s[1]), Integer.parseInt(s[2]), s[0]);
+                pos.add(posizione);
+            }
+            return pos;
         } catch (FileNotFoundException e) {
-            System.out.println("Errore in lettura delle posizioni");
+            System.out.println("Errore nella lettura delle posizioni: " + e);
             throw new IOException();
         }
+    }
 
-        BufferedReader br = new BufferedReader(fr);
-        Posizione posizione = null;
-        String riga;
-        while ((riga = br.readLine()) != null) {
-            String[] s = riga.split(":");;
-            posizione = new Posizione(Integer. parseInt(s[1]), Integer. parseInt(s[2]), s[0]);
-            pos.add(posizione);
+    private static Color inserisciColore() {
+        Scanner in = new Scanner(System.in);
+        Color colore = null;
+        boolean inserito = false;
+
+        while(!inserito){
+            System.out.println("\nOpzioni colore:");
+            System.out.println("1) Lista colori");
+            System.out.println("2) Personalizzato");
+            System.out.print("Scelta: ");
+            int scelta = in.nextInt();
+            if (scelta == 2) {
+                System.out.println("\nColore personalizzato:");
+                System.out.print("Red (0-255):");
+                int red = in.nextInt();
+                System.out.print("Green (0-255):");
+                int green = in.nextInt();
+                System.out.print("Blue (0-255):");
+                int blue = in.nextInt();
+                colore = Color.getColor(red, green, blue);
+                inserito = true;
+            }
+            else {
+                System.out.println("\nLista colori:");
+                ArrayList<String> colori = Color.getColorList();
+                for (int i = 0; i < colori.size(); i++) {
+                    System.out.println((i + 1) + ") " + colori.get(i));
+                }
+                System.out.print("\nInserisci numero colore:");
+                scelta = in.nextInt();
+                try{
+                    colore = Color.getColor(colori.get(scelta - 1));
+                } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("Opzione non disponibile");
+                    continue;
+                }
+                inserito = true;
+            }
         }
-        return pos;
+        return colore;
     }
 
     public static void main(String[] args) {
@@ -77,9 +114,8 @@ public class Main {
                         System.out.print("\nNome lampadina: ");
                         String nome = in.next();
 
-                        ArrayList<Posizione> pos = null;
+                        ArrayList<Posizione> pos = loadPos();
                         String stanza = "";
-                        pos = loadPos();
                         Posizione posTrovata = null;
                         boolean trovato = false;
                         do {
@@ -96,40 +132,13 @@ public class Main {
                                     break;
                                 }
                             }
+                            if(!trovato){
+                                System.out.println("Questa posizione è già occupata! Scegline un'altra: ");
+                            }
                         }
                         while (!trovato);
 
-                        System.out.println("\nOpzioni colore:");
-                        System.out.println("1) Lista colori");
-                        System.out.println("2) Personalizzato");
-                        System.out.print("Scelta: ");
-                        scelta = in.nextInt();
-                        Color colore = Color.YELLOW;
-                        if (scelta == 2) {
-                            System.out.println("\nColore personalizzato:");
-                            System.out.print("Red (0-255):");
-                            int red = in.nextInt();
-                            System.out.print("Green (0-255):");
-                            int green = in.nextInt();
-                            System.out.print("Blue (0-255):");
-                            int blue = in.nextInt();
-                            colore = Color.getColor(red, green, blue);
-                        }
-                        else {
-                            System.out.println("\nLista colori:");
-                            ArrayList<String> colori = Color.getColorList();
-                            for (int i = 0; i < colori.size(); i++) {
-                                System.out.println((i + 1) + ") " + colori.get(i));
-                            }
-                            System.out.print("\nInserisci numero colore:");
-                            scelta = in.nextInt();
-                            try {
-                                colore = Color.getColor(colori.get(scelta - 1));
-                            } catch (ArrayIndexOutOfBoundsException e) {
-                                System.out.println("Opzione non disponibile");
-                                continue;
-                            }
-                        }
+                        Color colore = inserisciColore();
 
                         System.out.print("\nPotenza massima lampadina: ");
                         double potenza = in.nextDouble();
@@ -141,7 +150,7 @@ public class Main {
                         else {
                             casa.disegnaLampadine();
                         }
-                        System.out.println("Lampadina aggiunta con successo.");
+                        System.out.println("Lampadina aggiunta con successo. \n");
                     } catch (LampadinaDuplicataException e) {
                         System.out.println("Esiste già una lampadina in questo luogo!");
                     } catch (IOException e) {
@@ -151,7 +160,7 @@ public class Main {
 
                 case 2 -> {
                     casa.toggleLampadine();
-                    System.out.println("Stato lampadine invertito.");
+                    System.out.println("Stato lampadine invertito. \n");
                 }
 
                 case 3 -> {
@@ -170,10 +179,10 @@ public class Main {
                         casa.selectLamp(id);
                         casa.disegnaLampadinaWithId(id);
                     } catch (LampadinaNonTrovataException e) {
-                        System.out.println("Lampadina non trovata");
+                        System.out.println("Lampadina non trovata" + e);
                         continue;
                     }
-                    System.out.println("\nScegli cosa fare:");
+                    System.out.println("\nVuoi modificare la lampadina selezionata?:");
                     System.out.println("1) Modifica lampadina");
                     System.out.println("2) Esci");
                     System.out.print("Scelta:");
@@ -195,37 +204,7 @@ public class Main {
                             try {
                                 switch (scelta) {
                                     case 1:
-                                        System.out.println("\nOpzioni colore:");
-                                        System.out.println("1) Lista colori");
-                                        System.out.println("2) Personalizzato");
-                                        System.out.print("Scelta: ");
-                                        scelta = in.nextInt();
-                                        Color colore = Color.YELLOW;
-                                        if (scelta == 2) {
-                                            System.out.println("\nColore personalizzato:");
-                                            System.out.print("Red (0-255):");
-                                            int red = in.nextInt();
-                                            System.out.print("Green (0-255):");
-                                            int green = in.nextInt();
-                                            System.out.print("Blue (0-255):");
-                                            int blue = in.nextInt();
-                                            colore = Color.getColor(red, green, blue);
-                                        }
-                                        else {
-                                            System.out.println("\nLista colori:");
-                                            ArrayList<String> colori = Color.getColorList();
-                                            for (int i = 0; i < colori.size(); i++) {
-                                                System.out.println((i + 1) + ") " + colori.get(i));
-                                            }
-                                            System.out.print("\nInserisci numero colore:");
-                                            scelta = in.nextInt();
-                                            try {
-                                                colore = Color.getColor(colori.get(scelta - 1));
-                                            } catch (ArrayIndexOutOfBoundsException e) {
-                                                System.out.println("Opzione non disponibile");
-                                                continue;
-                                            }
-                                        }
+                                        Color colore = inserisciColore();
                                         casa.getGestore().cambiaColore(id, colore);
                                         casa.disegnaLampadinaWithId(id);
                                         System.out.println("Colore aggiornato!");
@@ -292,7 +271,7 @@ public class Main {
                 }
 
                 case 6 -> {
-                    System.out.println("\nVuoi salvare lo stato della casa:");
+                    System.out.println("\nVuoi salvare lo stato della casa?:");
                     System.out.println("1) Salva su file");
                     System.out.println("2) Non salvare");
                     scelta = in.nextInt();
@@ -317,7 +296,7 @@ public class Main {
                 }
 
                 case 7 -> {
-                    loadLamps("lamp.txt", casa);
+                    loadLamps(casa);
                     casa.disegnaLampadine();
                 }
 

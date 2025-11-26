@@ -31,7 +31,6 @@ public class OpzioneGrafica {
         }
     }
 
-
     public void close() {
         if (isOpen) {
             riquadro.remove();
