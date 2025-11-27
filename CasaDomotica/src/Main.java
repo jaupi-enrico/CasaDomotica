@@ -206,7 +206,6 @@ public class Main {
                             System.out.println("\nMenu modifica lampadina:");
                             System.out.println("1) Cambia colore");
                             System.out.println("2) Accendi lampadina");
-                            
                             System.out.println("3) Spegni lampadina");
                             System.out.println("4) Cambia intensità");
                             System.out.println("5) Rimuovi lampadina");

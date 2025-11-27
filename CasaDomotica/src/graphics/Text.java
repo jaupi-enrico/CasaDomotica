@@ -76,7 +76,13 @@ public class Text implements Shape
         y += dy;
         Canvas.getInstance().repaint();
     }    
-    
+
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+        Canvas.getInstance().repaint();
+    }
+
     /**
      * Resizes this text both horizontally and vertically.
      * @param dw the amount by which to resize the width on each side
