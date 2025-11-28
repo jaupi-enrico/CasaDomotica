@@ -2,90 +2,154 @@ import graphics.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
     private static void loadLamps(CasaGrafica casa) {
         try (BufferedReader br = new BufferedReader(new FileReader("lamp.txt"))) {
+
             String line;
+            int nLamp = 0;
+
             while ((line = br.readLine()) != null) {
-                Lampadina l = new Lampadina(line);
                 try {
+                    Lampadina l = new Lampadina(line);
                     casa.addLamp(l);
-                }
-                catch (LampadinaDuplicataException e) {
-                    System.out.println("Una Lampadina è duplicata: " + e);
+                    nLamp++;
+                } catch (LampadinaDuplicataException e) {
+                    System.out.println("Lampadina duplicata: " + e.getMessage());
+                } catch (Exception e) {
+                    System.out.println("Errore nella riga: \"" + line + "\" → " + e.getMessage());
                 }
             }
+
+            System.out.println("Sono state aggiunte " + nLamp + " lampadine.");
+
         } catch (FileNotFoundException e) {
-            System.out.println("File con informazioni delle lampadine non trovato: " + e);
+            System.out.println("File lamp.txt non trovato: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("Errore nella lettura delle lampadine: " + e);
+            System.out.println("Errore nella lettura di lamp.txt: " + e.getMessage());
         }
     }
+
 
 
     private static ArrayList<Posizione> loadPos() throws IOException {
         ArrayList<Posizione> pos = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("pos.txt"));){
-            Posizione posizione = null;
+        try (BufferedReader br = new BufferedReader(new FileReader("pos.txt"))) {
             String riga;
             while ((riga = br.readLine()) != null) {
-                String[] s = riga.split(":");;
-                posizione = new Posizione(Integer.parseInt(s[1]), Integer.parseInt(s[2]), s[0]);
-                pos.add(posizione);
+                String[] s = riga.split(":");
+                if (s.length < 3) {
+                    System.out.println("Riga pos.txt malformata (atteso formato 'stanza:x:y'): " + riga);
+                    throw new IOException("riga malformata: " + riga);
+                }
+                try {
+                    int x = Integer.parseInt(s[1].trim());
+                    int y = Integer.parseInt(s[2].trim());
+                    Posizione posizione = new Posizione(x, y, s[0].trim());
+                    pos.add(posizione);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Coordinata non numerica nella riga: " + riga);
+                }
             }
             return pos;
         } catch (FileNotFoundException e) {
-            System.out.println("Errore nella lettura delle posizioni: " + e);
-            throw new IOException();
+            System.out.println("File pos.txt non trovato: " + e.getMessage());
+            throw new IOException("File pos.txt non trovato", e);
         }
     }
 
-    private static Color inserisciColore() {
-        Scanner in = new Scanner(System.in);
+    private static Color inserisciColore(Scanner in) {
         Color colore = null;
-        boolean inserito = false;
-        int scelta = 0;
-        while(!inserito && scelta != 1 && scelta != 2){
-            System.out.println("\nOpzioni colore:");
-            System.out.println("1) Lista colori");
-            System.out.println("2) Personalizzato");
-            System.out.print("Scelta: ");
-            scelta = in.nextInt();
-            if (scelta == 2) {
-                System.out.println("\nColore personalizzato:");
-                System.out.print("Red (0-255):");
-                int red = in.nextInt();
-                System.out.print("Green (0-255):");
-                int green = in.nextInt();
-                System.out.print("Blue (0-255):");
-                int blue = in.nextInt();
-                colore = Color.getColor(red, green, blue);
-                inserito = true;
-            }
-            else if (scelta == 1) {
-                System.out.println("\nLista colori:");
-                ArrayList<String> colori = Color.getColorList();
-                for (int i = 0; i < colori.size(); i++) {
-                    System.out.println((i + 1) + ") " + colori.get(i));
+
+        while (true) {
+            try {
+                System.out.println("\nOpzioni colore:");
+                System.out.println("1) Lista colori");
+                System.out.println("2) Personalizzato");
+                int scelta = leggiInt(in, "Scelta: ");
+
+                if (scelta == 1) {
+                    ArrayList<String> colori = Color.getColorList();
+                    System.out.println("\nLista colori:");
+                    for (int i = 0; i < colori.size(); i++) {
+                        System.out.println((i + 1) + ") " + colori.get(i));
+                    }
+                    int index = leggiInt(in, "\nInserisci numero colore: ");
+                    if (index < 1 || index > colori.size()) {
+                        System.out.println("Opzione non disponibile.");
+                        continue;
+                    }
+                    colore = Color.getColor(colori.get(index - 1));
+                    break;
+                } else if (scelta == 2) {
+                    System.out.println("\nColore personalizzato:");
+                    int red = leggiInt(in, "Red (0-255): ");
+                    int green = leggiInt(in, "Green (0-255): ");
+                    int blue = leggiInt(in, "Blue (0-255): ");
+
+                    if (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
+                        System.out.println("Valori RGB devono essere compresi tra 0 e 255. Riprova.");
+                        continue;
+                    }
+
+                    colore = Color.getColor(red, green, blue);
+                    break;
+                } else {
+                    System.out.println("Scelta non valida.");
                 }
-                System.out.print("\nInserisci numero colore:");
-                scelta = in.nextInt();
-                try{
-                    colore = Color.getColor(colori.get(scelta - 1));
-                } catch (ArrayIndexOutOfBoundsException e){
-                    System.out.println("Opzione non disponibile");
-                    continue;
-                }
-                inserito = true;
-            }
-            else{
-                System.out.println("Scelta non valida");
+
+            } catch (Exception e) {
+                System.out.println("Errore nell'input: " + e);
+                in.nextLine();
             }
         }
+
         return colore;
+    }
+
+    public static int leggiInt(Scanner in, String msg) {
+        while (true) {
+            System.out.print(msg);
+            String s = in.nextLine();
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                System.out.println("Inserisci un numero valido.");
+            }
+        }
+    }
+
+    public static long leggiLong(Scanner in, String msg) {
+        while (true) {
+            System.out.print(msg);
+            String s = in.nextLine();
+            try {
+                return Long.parseLong(s);
+            } catch (NumberFormatException e) {
+                System.out.println("Inserisci un numero valido.");
+            }
+        }
+    }
+
+    public static double leggiDouble(Scanner in, String msg) {
+        while (true) {
+            System.out.print(msg);
+            String s = in.nextLine();
+            try {
+                return Double.parseDouble(s);
+            } catch (NumberFormatException e) {
+                System.out.println("Inserisci un valore numerico valido.");
+            }
+        }
+    }
+
+    public static String leggiString(Scanner in, String msg) {
+        System.out.print(msg);
+        return in.nextLine().trim();
     }
 
     public static void main(String[] args) {
@@ -102,7 +166,7 @@ public class Main {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n===== MENU CASA DOMOTICA =====");
+            System.out.println("\n***** MENU CASA DOMOTICA *****");
             System.out.println("1) Aggiungi lampadina");
             System.out.println("2) Toggle tutte le lampadine");
             System.out.println("3) Apri menu grafico");
@@ -111,44 +175,39 @@ public class Main {
             System.out.println("6) Esci");
             System.out.println("7) Carica salvataggio");
             System.out.println("8) API");
-            System.out.print("Scelta: ");
+            int scelta = leggiInt(in, "Scelta: ");
 
-            int scelta = in.nextInt();
             switch (scelta) {
-
                 case 1 -> {
                     try {
-                        System.out.print("\nNome lampadina: ");
-                        String nome = in.next();
-
+                        String nome = leggiString(in, "\nNome lampadina: ");
                         ArrayList<Posizione> pos = loadPos();
                         String stanza = "";
                         Posizione posTrovata = null;
                         boolean trovato = false;
                         do {
-                            System.out.println("\n==Stanze disponibili==");
+                            System.out.println("\n***** Stanze disponibili *****");
                             for (Posizione p : pos) {
                                 System.out.println(p.getStanza());
                             }
-                            System.out.print("\nInserisci nome stanza: ");
-                            stanza = in.next();
+                            stanza = leggiString(in, "\nInserisci nome stanza: ");
                             for (Posizione p : pos) {
-                                if (p.getStanza().equals(stanza)) {
+                                if (p.getStanza().trim().equalsIgnoreCase(stanza.trim())) {
                                     trovato = true;
                                     posTrovata = p;
                                     break;
                                 }
                             }
+
                             if(!trovato){
-                                System.out.println("Questa posizione è già occupata! Scegline un'altra: ");
+                                System.out.println("Stanza non trovata. Riprova.");
                             }
                         }
                         while (!trovato);
 
-                        Color colore = inserisciColore();
+                        Color colore = inserisciColore(in);
 
-                        System.out.print("\nPotenza massima lampadina: ");
-                        double potenza = in.nextDouble();
+                        double potenza = leggiDouble(in, "\nPotenza massima lampadina: ");
 
                         casa.addLamp(potenza, posTrovata, nome, 50, colore);
                         if(casa.isMenuOpen()) {
@@ -178,8 +237,7 @@ public class Main {
                 }
 
                 case 4 -> {
-                    System.out.print("Inserisci numero lampadina:");
-                    long id = in.nextLong();
+                    long id = leggiLong(in, "Inserisci numero lampadina: ");
                     casa.togliDisegnoLampadineWithId();
                     casa.apriMenu();
                     try {
@@ -191,9 +249,10 @@ public class Main {
                     }
                     System.out.println("\nVuoi modificare la lampadina selezionata?:");
                     System.out.println("1) Modifica lampadina");
-                    System.out.println("2) Esci");
-                    System.out.print("Scelta:");
-                    scelta = in.nextInt();
+                    System.out.println("2) API");
+                    System.out.println("3) Esci");
+                    scelta = leggiInt(in, "Scelta: ");
+
                     boolean lampRemoved = false;
                     if (scelta == 1) {
                         casa.casaImg.remove();
@@ -214,13 +273,12 @@ public class Main {
                             System.out.println("4) Cambia intensità");
                             System.out.println("5) Rimuovi lampadina");
                             System.out.println("6) Esci");
-                            System.out.print("Scelta: ");
+                            scelta = leggiInt(in, "Scelta: ");
 
-                            scelta = in.nextInt();
                             try {
                                 switch (scelta) {
                                     case 1:
-                                        Color colore = inserisciColore();
+                                        Color colore = inserisciColore(in);
                                         casa.getGestore().cambiaColore(id, colore);
                                         casa.togliDisegnoLampadineWithId();
                                         menu.cambiaColore(colore);
@@ -239,8 +297,7 @@ public class Main {
                                         System.out.println("Lampadina spenta!");
                                         break;
                                     case 4:
-                                        System.out.print("Nuova intensità (0-100): ");
-                                        double intensita = in.nextDouble();
+                                        double intensita = leggiDouble(in, "Nuova intensità (0-100): ");
                                         casa.getGestore().cambiaIntensita(id, intensita);
                                         casa.togliDisegnoLampadineWithId();
                                         menu.cambiaIntensita(intensita);
@@ -259,12 +316,19 @@ public class Main {
                                 }
                             }
                             catch (LampadinaNonTrovataException e) {
-                                System.out.println("Errore con la lampadina");
+                                System.out.println("Lampadina non trovata: " + e);
                                 return;
                             }
                         }
                         menu.remove();
                         casa.casaImg.draw();
+                    } else if (scelta == 2) {
+                        try {
+                            System.out.println(casa.getGestore().getGestore().getLampadina(id).toAPI());
+                        }
+                        catch (LampadinaNonTrovataException e) {
+                            System.out.println("Lampadina non trovata: " + e);
+                        }
                     } else {
                         System.out.println("Uscita dal menu.");
                     }
@@ -273,7 +337,7 @@ public class Main {
                         try {
                             casa.togliDisegnoLampadina(id);
                         } catch (LampadinaNonTrovataException e) {
-                            System.out.println("Lampadina non trovata");
+                            System.out.println("Lampadina non trovata: " + e);
                         }
                         if (casa.isMenuOpen()) {
                             casa.disegnaLampadineWithId();
@@ -283,6 +347,7 @@ public class Main {
                         continue;
                     }
                     casa.apriMenu();
+                    casa.disegnaLampadineWithId();
                 }
 
                 case 5 -> {
@@ -296,7 +361,7 @@ public class Main {
                     System.out.println("\nVuoi salvare lo stato della casa?:");
                     System.out.println("1) Salva su file");
                     System.out.println("2) Non salvare");
-                    scelta = in.nextInt();
+                    scelta = leggiInt(in, "Scelta: ");
 
                     if (scelta == 1) {
                         System.out.println("Salvataggio in corso...");
@@ -319,7 +384,11 @@ public class Main {
 
                 case 7 -> {
                     loadLamps(casa);
-                    casa.disegnaLampadine();
+                    if (casa.isMenuOpen()) {
+                        casa.disegnaLampadineWithId();
+                    } else {
+                        casa.disegnaLampadine();
+                    }
                 }
 
                 case 8 -> {
