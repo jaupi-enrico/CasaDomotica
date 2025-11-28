@@ -41,19 +41,24 @@ public class MenuLampadina {
     private void buildRays() {
         double cx = size / 2.0;
         double cy = baseY + 125;
+        double gap = 30;
 
         double r = 160;
         double len = 40;
 
-        for (int i = 0; i < 8; i++) {
-            double angle = Math.toRadians(i * 45);
+        int n = 16;
+        double step = 360.0 / n;
+
+        for (int i = 0; i < n; i++) {
+            double angle = Math.toRadians(i * step);
+
             double x1 = cx + Math.cos(angle) * r;
             double y1 = cy + Math.sin(angle) * r;
 
             double x2 = cx + Math.cos(angle) * (r + len);
             double y2 = cy + Math.sin(angle) * (r + len);
 
-            rays.add(new Line(x1, y1, x2, y2));
+            rays.add(new Line(x1, y1 + gap, x2, y2 + gap));
         }
     }
 

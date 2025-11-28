@@ -47,13 +47,13 @@ public class Main {
         Scanner in = new Scanner(System.in);
         Color colore = null;
         boolean inserito = false;
-
-        while(!inserito){
+        int scelta = 0;
+        while(!inserito && scelta != 1 && scelta != 2){
             System.out.println("\nOpzioni colore:");
             System.out.println("1) Lista colori");
             System.out.println("2) Personalizzato");
             System.out.print("Scelta: ");
-            int scelta = in.nextInt();
+            scelta = in.nextInt();
             if (scelta == 2) {
                 System.out.println("\nColore personalizzato:");
                 System.out.print("Red (0-255):");
@@ -65,7 +65,7 @@ public class Main {
                 colore = Color.getColor(red, green, blue);
                 inserito = true;
             }
-            else {
+            else if (scelta == 1) {
                 System.out.println("\nLista colori:");
                 ArrayList<String> colori = Color.getColorList();
                 for (int i = 0; i < colori.size(); i++) {
@@ -80,6 +80,9 @@ public class Main {
                     continue;
                 }
                 inserito = true;
+            }
+            else{
+                System.out.println("Scelta non valida");
             }
         }
         return colore;
@@ -107,6 +110,7 @@ public class Main {
             System.out.println("5) Chiudi menu grafico");
             System.out.println("6) Esci");
             System.out.println("7) Carica salvataggio");
+            System.out.println("8) API");
             System.out.print("Scelta: ");
 
             int scelta = in.nextInt();
@@ -316,6 +320,10 @@ public class Main {
                 case 7 -> {
                     loadLamps(casa);
                     casa.disegnaLampadine();
+                }
+
+                case 8 -> {
+                    System.out.println(casa.getGestore().getGestore().toAPI());
                 }
 
                 default -> {

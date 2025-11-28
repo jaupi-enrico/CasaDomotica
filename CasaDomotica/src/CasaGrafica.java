@@ -188,7 +188,7 @@ public class CasaGrafica {
     }
 
     public void selectLamp(long id) throws LampadinaNonTrovataException {
-        getOpzione(id).getRiquadro().setColor(Color.BLUE);
+        getOpzione(id).getRiquadro().setColor(Color.YELLOW);
         getOpzione(id).getRiquadro().fill();
     }
 

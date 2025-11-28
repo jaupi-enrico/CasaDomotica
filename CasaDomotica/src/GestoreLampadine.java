@@ -106,4 +106,8 @@ public class GestoreLampadine {
         Lampadina l = getLampadina(id);
         arrayLampadine.remove(l);
     }
+
+    public String toAPI() {
+        return API.toJSON(this);
+    }
 }

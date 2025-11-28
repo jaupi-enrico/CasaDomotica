@@ -37,8 +37,13 @@ public class DisegnoLampadina {
     }
 
     public void draw(double intensita) {
-        double diametro = potenza * intensita / 100.0;
-
+        double diametro;
+        if(intensita == 0){
+             diametro = 0;
+        }
+        else {
+             diametro = potenza * intensita / 100.0;
+        }
         if (diametro < 0) diametro = 0;
 
         double nx = x + (width - diametro) / 2;

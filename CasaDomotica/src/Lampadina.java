@@ -9,7 +9,7 @@ public class Lampadina {
     private Color colore;
     private String nome;
     private boolean acceso;
-    private DisegnoLampadina disegno;
+    private transient DisegnoLampadina disegno;
 
     public Lampadina(long id, double potenza, Posizione p, String nome, double intensita, Color colore) {
         this.id = id;
@@ -96,15 +96,26 @@ public class Lampadina {
     }
 
     public void disegna() {
-        disegno.accendi(intensita);
+        if (acceso) {
+            disegno.accendi(intensita);
+        }
+        else {
+            disegno.spegni();
+        }
     }
+
 
     public void togliDisegno() {
         disegno.rimuovi();
     }
 
     public void disegnaWithId() {
-        disegno.accendi(intensita);
+        if (acceso) {
+            disegno.accendi(intensita);
+        }
+        else {
+            disegno.spegni();
+        }
         disegno.drawId();
     }
 
@@ -125,6 +136,10 @@ public class Lampadina {
                 ",Intensità:" + intensita +
                 ",Colore:" + Color.colorToString(colore) +
                 ",Stato:" + stato;
+    }
+
+    public String toAPI() {
+        return API.toJSON(this);
     }
 }
 

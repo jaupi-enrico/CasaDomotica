@@ -8,19 +8,6 @@ public class CasaIntelligente {
         this.gestore = new GestoreLampadine();
     }
 
-    public String riepilogoCasa() {
-        int accese = 0;
-        int spente = 0;
-
-        for (Lampadina l : gestore.getTutte()) {
-            if (l.getStato()) accese++;
-            else spente++;
-        }
-
-        return "Lampadine accese: " + accese +
-                ", lampadine spente: " + spente;
-    }
-
     public GestoreLampadine getGestore() {
         return gestore;
     }
