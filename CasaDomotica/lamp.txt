@@ -1,1 +1,11 @@
-ID:1,Nome:Singh,Posizione:x=140.0 y=330.0 stanza=bagno,Potenza:100.0,Intensità:50.0,Colore:personalizzato=230&130&25,Stato:Acceso
+ID:1,Nome:Bagno,Posizione:x=140.0 y=330.0 stanza=bagno,Potenza:100.0,Intensità:50.0,Colore:blue,Stato:Acceso
+ID:2,Nome:Comodino,Posizione:x=370.0 y=410.0 stanza=camera2,Potenza:65.0,Intensità:50.0,Colore:yellow,Stato:Acceso
+ID:3,Nome:Camera da letto,Posizione:x=160.0 y=470.0 stanza=camera1,Potenza:150.0,Intensità:50.0,Colore:red,Stato:Acceso
+ID:4,Nome:Salotto 1,Posizione:x=500.0 y=400.0 stanza=sala1,Potenza:200.0,Intensità:50.0,Colore:white,Stato:Acceso
+ID:5,Nome:Salotto 2,Posizione:x=620.0 y=400.0 stanza=sala2,Potenza:200.0,Intensità:50.0,Colore:white,Stato:Acceso
+ID:6,Nome:Garage 1,Posizione:x=1160.0 y=180.0 stanza=garage1,Potenza:150.0,Intensità:50.0,Colore:white,Stato:Spento
+ID:7,Nome:Garage 2,Posizione:x=1160.0 y=400.0 stanza=garage2,Potenza:200.0,Intensità:50.0,Colore:white,Stato:Spento
+ID:8,Nome:Ingresso,Posizione:x=560.0 y=560.0 stanza=ingresso,Potenza:100.0,Intensità:50.0,Colore:yellow,Stato:Spento
+ID:9,Nome:Giardino,Posizione:x=240.0 y=150.0 stanza=giardino,Potenza:250.0,Intensità:50.0,Colore:white,Stato:Spento
+ID:10,Nome:Cucina 1,Posizione:x=620.0 y=130.0 stanza=cucina1,Potenza:150.0,Intensità:50.0,Colore:cyan,Stato:Acceso
+ID:11,Nome:Cucina 2,Posizione:x=480.0 y=100.0 stanza=cucina2,Potenza:150.0,Intensità:50.0,Colore:cyan,Stato:Acceso

@@ -77,6 +77,8 @@ public class MenuLampadina {
         stanza.draw();
         intensita.draw();
 
+        System.out.println("X: " + intensita.getX() + ", Y: " + intensita.getY());
+
         if (lamp.getStato()) {
             for (Line ray : rays) ray.draw();
         }
@@ -109,10 +111,9 @@ public class MenuLampadina {
         double cy = intensita.getY();
 
         intensita.remove();
-        intensita = new Text(cx, cy, (int) nuovoValore + "%");
+        intensita = new Text(650, 150, (int) nuovoValore + "%");
 
         intensita.grow(50, 50);
-        intensita.setPosition(cx, cy);
 
         intensita.draw();
     }

@@ -231,7 +231,7 @@ public class Main {
 
                 case 3 -> {
                     casa.apriMenu();
-                    casa.togliDisegnoLampadine();
+                    casa.togliDisegnoLampadineWithId();
                     casa.disegnaLampadineWithId();
                     System.out.println("Menu grafico aperto.");
                 }
@@ -297,7 +297,14 @@ public class Main {
                                         System.out.println("Lampadina spenta!");
                                         break;
                                     case 4:
-                                        double intensita = leggiDouble(in, "Nuova intensità (0-100): ");
+                                        double intensita;
+                                        do {
+                                            intensita = leggiDouble(in, "Nuova intensità (0-100): ");
+                                            if (intensita < 0 || intensita > 100) {
+                                                System.out.println("Errore: inserisci un valore tra 0 e 100.");
+                                            }
+                                        } while (intensita < 0 || intensita > 100);
+
                                         casa.getGestore().cambiaIntensita(id, intensita);
                                         casa.togliDisegnoLampadineWithId();
                                         menu.cambiaIntensita(intensita);
@@ -332,7 +339,7 @@ public class Main {
                     } else {
                         System.out.println("Uscita dal menu.");
                     }
-                    if (!lampRemoved) {
+                    if (lampRemoved) {
                         casa.deselectLamps();
                         try {
                             casa.togliDisegnoLampadina(id);
@@ -346,6 +353,7 @@ public class Main {
                         }
                         continue;
                     }
+                    casa.deselectLamps();
                     casa.apriMenu();
                     casa.disegnaLampadineWithId();
                 }
