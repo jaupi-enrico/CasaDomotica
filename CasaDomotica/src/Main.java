@@ -186,7 +186,7 @@ public class Main {
                         Posizione posTrovata = null;
                         boolean trovato = false;
                         do {
-                            System.out.println("\n***** Stanze disponibili *****");
+                            System.out.println("\n***** ELENCO STANZE *****");
                             for (Posizione p : pos) {
                                 System.out.println(p.getStanza());
                             }
@@ -247,7 +247,7 @@ public class Main {
                         System.out.println("Lampadina non trovata" + e);
                         continue;
                     }
-                    System.out.println("\nVuoi modificare la lampadina selezionata?:");
+                    System.out.println("\nVuoi modificare la lampadina selezionata?");
                     System.out.println("1) Modifica lampadina");
                     System.out.println("2) API");
                     System.out.println("3) Esci");
@@ -266,7 +266,7 @@ public class Main {
                         }
                         menu.show();
                         while (scelta != 6 && scelta != 5) {
-                            System.out.println("\nMenu modifica lampadina:");
+                            System.out.println("\n***** MENU MODIFICA LAMPADINA *****");
                             System.out.println("1) Cambia colore");
                             System.out.println("2) Accendi lampadina");
                             System.out.println("3) Spegni lampadina");
@@ -366,7 +366,7 @@ public class Main {
                 }
 
                 case 6 -> {
-                    System.out.println("\nVuoi salvare lo stato della casa?:");
+                    System.out.println("\nVuoi salvare lo stato della casa?");
                     System.out.println("1) Salva su file");
                     System.out.println("2) Non salvare");
                     scelta = leggiInt(in, "Scelta: ");
