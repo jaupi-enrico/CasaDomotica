@@ -1,7 +1,7 @@
-# CasaDomotica
+# Casa Domotica
 
 ## Description
-CasaDomotica is a graphical demonstration program written in Java.  
+Casa Domotica is a graphical demonstration program written in Java.  
 It simulates how a home automation control system can function, showing how sensors, actuators, and rooms can interact inside a smart home.  
 The project is intended for educational purposes and as a conceptual example of a possible control system architecture.
 
