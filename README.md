@@ -8,7 +8,6 @@ The project is intended for educational purposes and as a conceptual example of 
 
 ## Features
 + Graphical interface for interacting with light bulbs
-+ Simulation of sensors (temperature, luminosity, etc.)
 + Modular code structure to allow easy expansion
 
 
